@@ -1,0 +1,8 @@
+package: github.com/cescoferraro/flag
+import:
+- package: github.com/pressly/chi
+  version: v2.0.0
+  subpackages:
+  - middleware
+- package: github.com/ahmetalpbalkan/go-linq
+  version: v3.0.0

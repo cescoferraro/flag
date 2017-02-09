@@ -1,0 +1,23 @@
+---
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  namespace: flag
+  name: flag-frontend-deploy
+spec:
+  replicas: 1
+  template:
+    metadata:
+      namespace: flag
+      labels:
+        name: flag-frontend-pods
+    spec:
+      containers:
+        - image: cescoferraro/flag:frontend-0.2.3
+          imagePullPolicy: Always
+          name: frontend
+          env:
+          - name: KUBERNETES
+            value: "true"
+          - name: NODE_ENV
+            value: "production"

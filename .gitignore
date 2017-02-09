@@ -1,0 +1,6 @@
+dist/
+.dobi/
+.idea/
+www/
+vendor/
+/node_modules/

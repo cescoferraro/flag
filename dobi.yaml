@@ -1,0 +1,24 @@
+meta:
+    project: flag
+    default: production
+    include: ['./build/dobi/jobs.yaml',
+              './build/dobi/images.yaml',
+              './build/dobi/watch.yaml']
+
+
+env=vars:
+    variables:
+      - FRONTEND_VERSION=0.2.2
+      - API_VERSION=0.2.2
+
+mount=source:
+    bind: .
+    path: /go/src/github.com/cescoferraro/flag
+
+
+
+
+
+
+
+

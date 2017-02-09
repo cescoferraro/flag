@@ -1,0 +1,33 @@
+job=dev:
+    net-mode: host
+    user: "{user.uid}"
+    use: dev-image
+    mounts: [source]
+    interactive: true
+    command: concurrently "npm run go" "node hot.js"
+    depends: [vars]
+    env:
+      - "NODE_ENV=development"
+
+job=stage:
+    net-mode: host
+    user: "{user.uid}"
+    use: dev-image
+    mounts: [source]
+    interactive: true
+    command: concurrently "npm run go" "node www/server.bundle.js"
+    depends: [vars,frontend]
+    env:
+      - "NODE_ENV=development"
+
+
+job=prod:
+    net-mode: host
+    user: "{user.uid}"
+    use: dev-image
+    mounts: [source]
+    interactive: true
+    command: concurrently "npm run go" "node www/server.bundle.js"
+    depends: [vars,frontend]
+    env:
+      - "NODE_ENV=production"

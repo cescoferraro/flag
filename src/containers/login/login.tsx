@@ -1,0 +1,102 @@
+import Utils from "../../shared/utils";
+import * as React from "react";
+import * as Rx from "rx-lite-dom";
+import {Observable} from "rx-lite-dom";
+import withStyles from "isomorphic-style-loader/lib/withStyles";
+import {Card, CardActions, CardHeader, CardMedia, CardTitle, CardText} from "material-ui/Card";
+import RaisedButton from "material-ui/RaisedButton";
+import TextField from "material-ui/TextField";
+import {createAsyncComponent} from "react-async-component";
+import {BelowAppBar} from "../../shared/routes";
+declare let require, window: any;
+let css = require('./login.pcss');
+
+type User = {
+    Email: string;
+    Password: string;
+}
+
+
+class LoginComponent extends React.Component<any,any> {
+    context: any;
+    static contextTypes = {router: React.PropTypes.object};
+
+    catchErrors(err, ss) {
+        console.error("error: ", err);
+        console.error("ss: ", ss);
+        return Observable.empty();
+    }
+
+    login(event) {
+        console.log(event.target.elements.email.value);
+        event.preventDefault();
+        const body = {
+            email: event.target.elements.email.value,
+            password: event.target.elements.password.value
+        };
+        console.log(body);
+        Rx.DOM.post(Utils.API_URL("/login"), require('serialize-javascript')(body))
+            .catch(this.catchErrors)
+            .subscribe(
+                (xhr: XMLHttpRequest) => {
+                    let me: User = JSON.parse(xhr.response);
+                    console.log(me);
+                    this.context.router.push("/dashboard/list")
+                });
+
+    }
+
+    render() {
+        return (
+            <div className={css.page}>
+                <div className={css.container}>
+                    <form onSubmit={this.login.bind(this)} className={css.form}>
+                        <Card>
+                            <TextField
+                                defaultValue={"cesco@gmail.com"}
+                                type="email"
+                                id="email"
+                                name="email"
+                                floatingLabelText="Email"
+                                fullWidth={true}
+                                hintText="Hint Text"
+                            /><br />
+
+                            <TextField
+                                fullWidth={true}
+                                defaultValue={"cesco12"}
+                                type="password"
+                                floatingLabelText="Password"
+                                id="password"
+                                name="password"
+                                hintText="Hint Text"
+                            />
+                            <br />
+
+
+                        </Card>
+                        <br />
+                        <CardActions>
+                            <RaisedButton
+                                type="submit"
+                                value="Submit"
+                                primary={true}
+                                label="Label before"
+                                labelPosition="before"
+                                buttonStyle={{height:"100px"}}
+                                fullWidth={true}
+                            >
+                            </RaisedButton>
+                            <h2>djkndsk</h2>
+                            <h2>djkndsk</h2>
+                            <h2>djkndsk</h2>
+                            <h2>djkndsk</h2>
+                        </CardActions>
+                    </form>
+                </div>
+            </div>)
+    }
+}
+
+
+export default withStyles(css)(BelowAppBar(LoginComponent));

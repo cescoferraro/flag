@@ -1,0 +1,29 @@
+---
+apiVersion: extensions/v1beta1
+kind: Ingress
+metadata:
+  namespace: flag
+  name: flag-ing
+spec:
+  rules:
+  - host: flag.cescoferraro.xyz
+    http:
+      paths:
+      - path: /
+        backend:
+          serviceName: flag-frontend-svc
+          servicePort: 5000
+  - host: flag.api.cescoferraro.xyz
+    http:
+      paths:
+      - path: /
+        backend:
+          serviceName: flag-api-svc
+          servicePort: 7070
+  - host: api.flag.cescoferraro.xyz
+    http:
+      paths:
+      - path: /
+        backend:
+          serviceName: flag-api-svc
+          servicePort: 7070
