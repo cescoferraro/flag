@@ -4,5 +4,3 @@ interface Action<T>{
     error?: boolean;
     meta?: any;
 }
-
-export default Action;

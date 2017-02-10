@@ -6,6 +6,7 @@ import { Route, IndexRoute, Switch, Router, Link } from "react-router-dom";
 import { BelowAppBar } from "../../shared/routes";
 import { connect } from "react-refetch";
 import { List } from "../../components/workers/worker.list";
+import { Graphs } from "../../components/graphs/graphs";
 import DashboardTAB from "../../components/tabs/tabs";
 declare const fetch: any;
 
@@ -24,8 +25,8 @@ class DashboardComponent extends React.Component<any, any> {
     render() {
         return <div>
             <Route component={DashboardTAB} />
-            <Route path="/dashboard/cart" component={() => (<h2>CART!</h2>)} />
-            <Route path="/dashboard/list" component={List} />
+            <Route path="/dashboard/graphs" component={Graphs} />
+            <Route path="/dashboard/workers" component={List} />
         </div>
     }
 }

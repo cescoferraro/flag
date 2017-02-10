@@ -12,6 +12,14 @@ const loaders = {
 			]
 
 		},
+		 {
+			test: /\.(css)$/,
+			loader: [
+				'isomorphic-style-loader',
+				'css-loader?sourceMap&modules&importLoaders=1&localIdentName=[name]_[local]_[hash:base64:3]',
+			]
+
+		},
 		{
 			test: /\.(eot|svg|ttf|otf|woff|woff2)$/,
 			loader: 'file-loader?name=fonts/font-[sha512:hash:base64:7].[ext]'

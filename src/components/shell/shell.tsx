@@ -23,9 +23,8 @@ class Bar extends React.Component<any, any> {
 
     render() {
         return <AppBar
-
             style={{position:"fixed",top:'0px', width:'100vw'}}
-            title={"flag API"}
+            title={"Flag HR"}
             iconElementLeft={<div></div>}
             iconElementRight={this.props.app.component}
         />;

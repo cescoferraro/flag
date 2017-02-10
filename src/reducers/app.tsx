@@ -1,4 +1,3 @@
-import Action from "./action";
 import {handleActions} from "redux-actions";
 export type APP_OBJECT = {
     version?: string;

@@ -15,7 +15,14 @@ export default ({userAgent}) => {
                 <Route exact path="/" component={AsyncLogin(userAgent)} />
                 <Route exact path="/login" component={AsyncLogin(userAgent)} />
                 <Route path="/dashboard" component={AsyncDashboard(userAgent)} />
+
+                <Route component={NoMatch} />
             </Switch>
         </div>)
 }
 
+const NoMatch = ({ location }) => (
+    <div style={{ height: "calc( 100vh - 64px)" }} >
+        <h3>No match for <code>{location.pathname}</code></h3>
+    </div>
+);

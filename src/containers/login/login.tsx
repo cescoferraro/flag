@@ -4,6 +4,8 @@ import * as Rx from "rx-lite-dom";
 import {Observable} from "rx-lite-dom";
 import withStyles from "isomorphic-style-loader/lib/withStyles";
 import {Card, CardActions, CardHeader, CardMedia, CardTitle, CardText} from "material-ui/Card";
+
+import { Button } from 'rebass'
 import RaisedButton from "material-ui/RaisedButton";
 import TextField from "material-ui/TextField";
 import {createAsyncComponent} from "react-async-component";
@@ -41,7 +43,7 @@ class LoginComponent extends React.Component<any,any> {
                 (xhr: XMLHttpRequest) => {
                     let me: User = JSON.parse(xhr.response);
                     console.log(me);
-                    this.context.router.push("/dashboard/list")
+                    this.context.router.push("/dashboard/workers")
                 });
 
     }
@@ -77,20 +79,7 @@ class LoginComponent extends React.Component<any,any> {
                         </Card>
                         <br />
                         <CardActions>
-                            <RaisedButton
-                                type="submit"
-                                value="Submit"
-                                primary={true}
-                                label="Label before"
-                                labelPosition="before"
-                                buttonStyle={{height:"100px"}}
-                                fullWidth={true}
-                            >
-                            </RaisedButton>
-                            <h2>djkndsk</h2>
-                            <h2>djkndsk</h2>
-                            <h2>djkndsk</h2>
-                            <h2>djkndsk</h2>
+                            <Button>LOGIN </Button>
                         </CardActions>
                     </form>
                 </div>

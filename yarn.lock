@@ -1077,6 +1077,10 @@ basic-auth@~1.0.3:
   version "1.0.4"
   resolved "https://registry.yarnpkg.com/basic-auth/-/basic-auth-1.0.4.tgz#030935b01de7c9b94a824b29f3fccb750d3a5290"
 
+batch-processor@^1.0.0:
+  version "1.0.0"
+  resolved "https://registry.yarnpkg.com/batch-processor/-/batch-processor-1.0.0.tgz#75c95c32b748e0850d10c2b168f6bdbe9891ace8"
+
 bcrypt-pbkdf@^1.0.0:
   version "1.0.0"
   resolved "https://registry.yarnpkg.com/bcrypt-pbkdf/-/bcrypt-pbkdf-1.0.0.tgz#3ca76b85241c7170bf7d9703e7b9aa74630040d4"
@@ -1373,6 +1377,10 @@ change-emitter@^0.1.2:
   version "0.1.2"
   resolved "https://registry.yarnpkg.com/change-emitter/-/change-emitter-0.1.2.tgz#6b88ca4d5d864e516f913421b11899a860aee8db"
 
+chart.js@^1.1.1:
+  version "1.1.1"
+  resolved "https://registry.yarnpkg.com/chart.js/-/chart.js-1.1.1.tgz#a9b17054220bd45cbdb176fd6bcb8783ef871a7d"
+
 cheerio@0.22.0:
   version "0.22.0"
   resolved "https://registry.yarnpkg.com/cheerio/-/cheerio-0.22.0.tgz#a9baa860a3f9b595a6b81b1a86873121ed3a269e"
@@ -1431,7 +1439,7 @@ clap@^1.0.9:
   dependencies:
     chalk "^1.1.3"
 
-classnames@2.2.5:
+classnames@2.2.5, classnames@^2.2.3, classnames@^2.2.5:
   version "2.2.5"
   resolved "https://registry.yarnpkg.com/classnames/-/classnames-2.2.5.tgz#fb3801d453467649ef3603c7d61a02bd129bde6d"
 
@@ -1896,7 +1904,7 @@ currently-unhandled@^0.4.1:
   dependencies:
     array-find-index "^1.0.1"
 
-d3@^3.5.6:
+d3@^3.5.0, d3@^3.5.6:
   version "3.5.17"
   resolved "https://registry.yarnpkg.com/d3/-/d3-3.5.17.tgz#bc46748004378b21a360c9fc7cf5231790762fb8"
 
@@ -2099,6 +2107,12 @@ ee-first@1.1.1:
 electron-to-chromium@^1.2.1:
   version "1.2.1"
   resolved "https://registry.yarnpkg.com/electron-to-chromium/-/electron-to-chromium-1.2.1.tgz#63ac7579a1c5bedb296c8607621f2efc9a54b968"
+
+element-resize-detector@1.1.8:
+  version "1.1.8"
+  resolved "https://registry.yarnpkg.com/element-resize-detector/-/element-resize-detector-1.1.8.tgz#f293ce063d170ff9dab6a3a3e25d801b49fec3bf"
+  dependencies:
+    batch-processor "^1.0.0"
 
 element-resize-event@^2.0.4:
   version "2.0.7"
@@ -3567,6 +3581,10 @@ lodash.uniq@^4.3.0:
   version "4.5.0"
   resolved "https://registry.yarnpkg.com/lodash.uniq/-/lodash.uniq-4.5.0.tgz#d0225373aeb652adc1bc82e4945339a842754773"
 
+lodash@4.15.0:
+  version "4.15.0"
+  resolved "https://registry.yarnpkg.com/lodash/-/lodash-4.15.0.tgz#3162391d8f0140aa22cf8f6b3c34d6b7f63d3aa9"
+
 "lodash@>=3.5 <5", lodash@^4.0.0, lodash@^4.11.0, lodash@^4.11.1, lodash@^4.13.1, lodash@^4.14.0, lodash@^4.16.4, lodash@^4.2.0, lodash@^4.2.1, lodash@^4.6.1:
   version "4.17.4"
   resolved "https://registry.yarnpkg.com/lodash/-/lodash-4.17.4.tgz#78203a4d1c328ae1d86dca6460e369b57f4055ae"
@@ -4909,7 +4927,7 @@ range-parser@^1.0.3, range-parser@~1.2.0:
   version "1.2.0"
   resolved "https://registry.yarnpkg.com/range-parser/-/range-parser-1.2.0.tgz#f49be6b487894ddc40dcc94a322f611092e00d5e"
 
-raw-loader@0.5.1:
+raw-loader@^0.5.1:
   version "0.5.1"
   resolved "https://registry.yarnpkg.com/raw-loader/-/raw-loader-0.5.1.tgz#0c3d0beaed8a01c966d9787bf778281252a979aa"
 
@@ -4925,6 +4943,13 @@ rc@^1.0.1, rc@^1.1.6, rc@~1.1.6:
 react-addons-create-fragment@^15.0.0:
   version "15.4.2"
   resolved "https://registry.yarnpkg.com/react-addons-create-fragment/-/react-addons-create-fragment-15.4.2.tgz#11372924f730a97dff4c690535211bb73d8f8815"
+  dependencies:
+    fbjs "^0.8.4"
+    object-assign "^4.1.0"
+
+react-addons-pure-render-mixin@^15.3.1:
+  version "15.4.2"
+  resolved "https://registry.yarnpkg.com/react-addons-pure-render-mixin/-/react-addons-pure-render-mixin-15.4.2.tgz#a8433c71c45e2368503721921dc47bdaf1fbabcd"
   dependencies:
     fbjs "^0.8.4"
     object-assign "^4.1.0"
@@ -4959,9 +4984,20 @@ react-broadcast@^0.1.2:
   dependencies:
     invariant "^2.2.1"
 
+react-chartjs@^0.8.0:
+  version "0.8.0"
+  resolved "https://registry.yarnpkg.com/react-chartjs/-/react-chartjs-0.8.0.tgz#d41386b3d3cbfef9003f5a655e7ea48a49fbfa19"
+
 react-component-resizable@1.1.0-rc1:
   version "1.1.0-rc1"
   resolved "https://registry.yarnpkg.com/react-component-resizable/-/react-component-resizable-1.1.0-rc1.tgz#167b635dfde48da512b0000cbd224c6bc539f2b3"
+
+react-d3@^0.4.0:
+  version "0.4.0"
+  resolved "https://registry.yarnpkg.com/react-d3/-/react-d3-0.4.0.tgz#decedced967f48cd89ccd79fb408d47f0f2acbe2"
+  dependencies:
+    d3 "^3.5.0"
+    react ">0.12.0"
 
 react-deep-force-update@^2.0.1:
   version "2.0.1"
@@ -5091,6 +5127,14 @@ react-side-effect@^1.1.0:
     exenv "^1.2.1"
     shallowequal "^0.2.2"
 
+react-sizeme@^2.2.0:
+  version "2.2.0"
+  resolved "https://registry.yarnpkg.com/react-sizeme/-/react-sizeme-2.2.0.tgz#f5b23126a014aafc97fb8b0b5af1575f7e9bbed2"
+  dependencies:
+    element-resize-detector "1.1.8"
+    invariant "^2.2.0"
+    lodash "4.15.0"
+
 react-svg-loader@2.0.0-alpha.0:
   version "2.0.0-alpha.0"
   resolved "https://registry.yarnpkg.com/react-svg-loader/-/react-svg-loader-2.0.0-alpha.0.tgz#a96506b7bc2b68b7c05b120a5ec18ba44f4d86a7"
@@ -5104,6 +5148,12 @@ react-svg-loader@2.0.0-alpha.0:
     svgo "~0.7.1"
     yargs "~6.0.0"
 
+react-table@^5.0.3:
+  version "5.0.3"
+  resolved "https://registry.yarnpkg.com/react-table/-/react-table-5.0.3.tgz#9536a0974bad9abe01246e4113ad57bea117475d"
+  dependencies:
+    classnames "^2.2.5"
+
 react-tap-event-plugin@2.0.1:
   version "2.0.1"
   resolved "https://registry.yarnpkg.com/react-tap-event-plugin/-/react-tap-event-plugin-2.0.1.tgz#316beb3bc6556e29ec869a7293e89c826a9074d2"
@@ -5114,7 +5164,7 @@ react-tree-walker@^1.0.0:
   version "1.0.0"
   resolved "https://registry.yarnpkg.com/react-tree-walker/-/react-tree-walker-1.0.0.tgz#061f719232a5b77b01fbab21b8ee6a3ab7be7085"
 
-react@15.4.1, react@^15.4.1:
+react@15.4.1, react@>0.12.0, react@^15.4.1:
   version "15.4.1"
   resolved "https://registry.yarnpkg.com/react/-/react-15.4.1.tgz#498e918602677a3983cd0fd206dfe700389a0dd6"
   dependencies:
@@ -5216,6 +5266,14 @@ readdirp@^2.0.0:
     minimatch "^3.0.2"
     readable-stream "^2.0.2"
     set-immediate-shim "^1.0.1"
+
+rebass@^0.3.3:
+  version "0.3.3"
+  resolved "https://registry.yarnpkg.com/rebass/-/rebass-0.3.3.tgz#bfffddf219107b07be2133173bab9b9887098173"
+  dependencies:
+    classnames "^2.2.3"
+    object-assign "^4.0.1"
+    react-addons-pure-render-mixin "^15.3.1"
 
 recast@^0.11.17:
   version "0.11.20"

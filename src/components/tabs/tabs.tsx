@@ -29,18 +29,16 @@ export class DashboardTAB extends React.Component<any, any> {
         super(props);
     }
 
-
-
     render() {
         return (
             <Tabs>
-                <Tab label="Item One"
-                    onClick={() => { this.context.router.push("/dashboard/list") }}
-                    data-route="/dashboard/list">
+                <Tab label="Workers"
+                    onClick={() => { this.context.router.push("/dashboard/workers") }}
+                    data-route="/dashboard/workers">
                 </Tab>
-                <Tab label="Item Two"
-                    onClick={() => { this.context.router.push("/dashboard/cart") }}
-                    data-route="/dashboard/cart" >
+                <Tab label="Graphs"
+                    onClick={() => { this.context.router.push("/dashboard/graphs") }}
+                    data-route="/dashboard/graphs" >
                 </Tab>
             </Tabs>
         );
