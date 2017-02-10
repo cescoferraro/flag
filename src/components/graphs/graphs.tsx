@@ -56,12 +56,45 @@ let GraphComponent = ({size, sheet}) => {
 
 
 
+
+
+        let company = sheet.value.map(worker => worker.Company);
+        var companyjob = foo(company);
+        var enterpriseDatajob = companyjob[0].map((value, index) => {
+            return { label: companyjob[0][index], value: companyjob[1][index] }
+        });
+
+
+        let SalarybyCOmpany = companyjob[0].map((company, index) => {
+            let test = sheet.value.filter(worker => {
+                if (worker.Company == company) {
+                    return worker;
+                }
+            })
+            let wowo = test.map(worker => {
+                return worker.Salary
+            }).reduce((a, b) => a + b, 0)
+
+
+            console.log(wowo);
+
+            console.log(company);
+
+            console.log(test.length);
+            return { label: company, value: wowo }
+        })
+
+
+
+
+
         let birthdateJOb = sheet.value.map(worker => {
             let age = new Date(worker.Birthdate)
             return calculateAge(age.getUTCMonth() + 1, age.getUTCDate(), age.getUTCFullYear())
         });
 
-   
+
+        console.log(pieData)
 
         return <div>
 
@@ -96,8 +129,31 @@ let GraphComponent = ({size, sheet}) => {
                 height={200}
                 sectorBorderColor="purple"
 
-                title="Job Treemap Chart"
+                title=" Employees Job Count Treemap Chart"
             />
+
+            <Treemap
+                data={enterpriseDatajob}
+                width={width}
+                height={200}
+                sectorBorderColor="purple"
+
+                title="Employees Count Treemap Chart"
+            />
+
+
+            <Treemap
+                data={SalarybyCOmpany}
+                width={width}
+                height={200}
+                sectorBorderColor="purple"
+
+                title="Employees Salary by Company Treemap Chart"
+            />
+
+
+
+
         </div>
     }
 

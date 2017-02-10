@@ -6,6 +6,7 @@ import { AsyncLogin } from "./containers/login/async";
 import { AsyncDashboard } from "./containers/dashboard/async";
 import { List } from "./components/workers/worker.list";
 import TabsExampleSimple from "./components/tabs/tabs"
+import { BelowAppBar } from "./shared/routes";
 
 export default ({userAgent}) => {
     return (
@@ -13,7 +14,6 @@ export default ({userAgent}) => {
             <Route component={AppShell} />
             <Switch>
                 <Route exact path="/" component={AsyncLogin(userAgent)} />
-                <Route exact path="/login" component={AsyncLogin(userAgent)} />
                 <Route path="/dashboard" component={AsyncDashboard(userAgent)} />
 
                 <Route component={NoMatch} />

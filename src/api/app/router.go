@@ -1,33 +1,36 @@
 package app
 
 import (
-	"github.com/pressly/chi"
-	"net/http"
+	"encoding/json"
 	"log"
-	"github.com/pressly/chi/middleware"
-	"gopkg.in/Iwark/spreadsheet.v2"
+	"net/http"
 	"strconv"
 	"time"
+
+	"github.com/pressly/chi"
+	"github.com/pressly/chi/middleware"
 	"github.com/pressly/chi/render"
-	"encoding/json"
+	"gopkg.in/Iwark/spreadsheet.v2"
 )
 
 type Worker struct {
-	Name      string;
-	ID        int;
-	Race      string;
-	Birthdate time.Time;
-	Job       string;
+	Name      string
+	ID        int
+	Race      string
+	Birthdate time.Time
+	Job       string
+	Company   string
+	Salary    int
 }
 
 type User struct {
-	Email    string;
-	Password string;
+	Email    string
+	Password string
 }
 
 var AllowedUsers = []User{
-	{Email:"cesco@gmail.com", Password:"cesco12"},
-	{Email:"guest@gmail.com", Password:"guest"},
+	{Email: "cesco@gmail.com", Password: "cesco12"},
+	{Email: "guest@gmail.com", Password: "guest"},
 }
 
 func contains(s []User, e User) bool {
@@ -39,7 +42,7 @@ func contains(s []User, e User) bool {
 	return false
 }
 
-func Router(version string) (chi.Router) {
+func Router(version string) chi.Router {
 	if version == "" {
 		version = "NOT SET"
 	}
@@ -84,11 +87,15 @@ func Router(version string) (chi.Router) {
 			render.JSON(w, r, err.Error())
 			return
 		}
+
+		HEADERS := sheet.Rows[0]
+		log.Println(HEADERS)
+
 		// holds all workers
 		var workForce []Worker
 		for i, row := range sheet.Rows {
 			//skip headers
-			if (i != 0) {
+			if i != 0 {
 				// If row is not empy
 				if len(row) != 0 {
 					worker, err := row2Worker(row)
@@ -103,7 +110,7 @@ func Router(version string) (chi.Router) {
 		// LINQ
 		//log.Println(From(workForce).Select(func(worker interface{}) interface{} {
 		//	return worker.(Worker).ID
-		//}).SumInts())cesco12
+		//}).SumInts())
 		render.JSON(w, r, workForce)
 
 	})
@@ -125,16 +132,22 @@ func row2Worker(row []spreadsheet.Cell) (Worker, error) {
 		log.Println(err.Error())
 		return Worker{}, err
 	}
-	return Worker{
-		ID:NEWCPF,
-		Name:row[1].Value,
-		Race:row[2].Value,
-		Job:row[4].Value,
-		Birthdate:NEWBirthdate,
 
+	Salary := row[6].Value
+	NEWSalary, err := strconv.Atoi(Salary)
+	if err != nil {
+		log.Println(err.Error())
+		return Worker{}, err
+	}
+
+	return Worker{
+		ID:        NEWCPF,
+		Name:      row[1].Value,
+		Race:      row[2].Value,
+		Birthdate: NEWBirthdate,
+		Job:       row[4].Value,
+		Company:   row[5].Value,
+		Salary:    NEWSalary,
 	}, nil
 
 }
-
-
-

@@ -17,11 +17,9 @@ class ListComponent extends React.Component<any, any> {
 
             console.log(sheet.value[0])
             return <div>
-                <div>My size is {width}px x {height}px</div>
                 <ReactTable
                     data={sheet.value}
-                    columns={columns}
-                />
+                    columns={columns} />
             </div>
         }
     }
@@ -45,6 +43,12 @@ const columns = [{
 }, {
     header: "Job", // Custom header components!
     accessor: 'Job'
+}, {
+    header: "Company", // Custom header components!
+    accessor: 'Company'
+}, {
+    header: "Salary", // Custom header components!
+    accessor: 'Salary'
 }
 
 
