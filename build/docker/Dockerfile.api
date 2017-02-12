@@ -1,8 +1,8 @@
 FROM golang
 MAINTAINER Francesco Ferraro <francescoaferraro@gmail.com>
 WORKDIR /app
-ADD client_secret.json flag/client_secret.json
-ADD dist/flag flag
+ADD client_secret.json /app/client_secret.json
+ADD dist/flag /app/flag
 ENV PORT 8080
 EXPOSE 8080
 ENTRYPOINT ["./flag"]
