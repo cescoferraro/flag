@@ -44,14 +44,19 @@ export const SalaryGrossChart = ({sheet, width}) => {
             }
         ]
     };
-    return <BarChart data={data} options={{
-                scales: {
-                    xAxes: [{
-                        stacked: true
-                    }],
-                    yAxes: [{
-                        stacked: true
-                    }]
-                }
-            }} width={width} height="250"/>
+    let opt = {
+        responsive: true,
+        scales: {
+            xAxes: [{
+                stacked: true
+            }],
+            yAxes: [{
+                stacked: true
+            }]
+        }
+    };
+    return <BarChart data={data}
+                     options={opt}
+                     width={width}
+                     height="250"/>
 };

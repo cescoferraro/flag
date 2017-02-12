@@ -1,6 +1,6 @@
 import {UniqueN} from "../../shared/unique";
 import * as React from "react";
-import {Treemap} from "react-d3";
+import {Treemap} from "rd3";
 
 
 export const WorkerCountTreemapChart = ({sheet, width}) => {

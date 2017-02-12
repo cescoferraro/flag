@@ -1904,7 +1904,7 @@ currently-unhandled@^0.4.1:
   dependencies:
     array-find-index "^1.0.1"
 
-d3@^3.5.0, d3@^3.5.6:
+d3@^3.5.6:
   version "3.5.17"
   resolved "https://registry.yarnpkg.com/d3/-/d3-3.5.17.tgz#bc46748004378b21a360c9fc7cf5231790762fb8"
 
@@ -4940,6 +4940,10 @@ rc@^1.0.1, rc@^1.1.6, rc@~1.1.6:
     minimist "^1.2.0"
     strip-json-comments "~1.0.4"
 
+rd3@^0.7.4:
+  version "0.7.4"
+  resolved "https://registry.yarnpkg.com/rd3/-/rd3-0.7.4.tgz#d5ddf1025a844e4fbef28d918276f97ee1abdcd9"
+
 react-addons-create-fragment@^15.0.0:
   version "15.4.2"
   resolved "https://registry.yarnpkg.com/react-addons-create-fragment/-/react-addons-create-fragment-15.4.2.tgz#11372924f730a97dff4c690535211bb73d8f8815"
@@ -4991,13 +4995,6 @@ react-chartjs@^0.8.0:
 react-component-resizable@1.1.0-rc1:
   version "1.1.0-rc1"
   resolved "https://registry.yarnpkg.com/react-component-resizable/-/react-component-resizable-1.1.0-rc1.tgz#167b635dfde48da512b0000cbd224c6bc539f2b3"
-
-react-d3@^0.4.0:
-  version "0.4.0"
-  resolved "https://registry.yarnpkg.com/react-d3/-/react-d3-0.4.0.tgz#decedced967f48cd89ccd79fb408d47f0f2acbe2"
-  dependencies:
-    d3 "^3.5.0"
-    react ">0.12.0"
 
 react-deep-force-update@^2.0.1:
   version "2.0.1"
@@ -5164,7 +5161,7 @@ react-tree-walker@^1.0.0:
   version "1.0.0"
   resolved "https://registry.yarnpkg.com/react-tree-walker/-/react-tree-walker-1.0.0.tgz#061f719232a5b77b01fbab21b8ee6a3ab7be7085"
 
-react@15.4.1, react@>0.12.0, react@^15.4.1:
+react@15.4.1, react@^15.4.1:
   version "15.4.1"
   resolved "https://registry.yarnpkg.com/react/-/react-15.4.1.tgz#498e918602677a3983cd0fd206dfe700389a0dd6"
   dependencies:

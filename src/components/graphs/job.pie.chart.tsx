@@ -1,7 +1,7 @@
 import {UniqueN} from "../../shared/unique";
 import * as React from "react";
 
-import {PieChart} from "react-d3";
+import {PieChart} from "rd3";
 const BarChart = require("react-chartjs").Bar;
 
 

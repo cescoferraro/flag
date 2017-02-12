@@ -10,14 +10,12 @@ import Utils from "../../shared/utils";
 class ListComponent extends React.Component<any, any> {
     render() {
         const {sheet, sheets} = this.props;
+        const columns = getColumns();
         if (sheet.pending) {
             return <h2>loaidng</h2>
         } else if (sheet.rejected) {
             return <ErrorComponent/>
         } else if (sheet.fulfilled) {
-
-            console.log(sheets);
-            console.log(sheet.value[0]);
             return <div>
                 <ReactTable
                     data={sheet.value}
@@ -27,14 +25,18 @@ class ListComponent extends React.Component<any, any> {
     }
 
 }
+const formatter = new Intl.NumberFormat('en-US', {
+    style: 'currency',
+    currency: 'BRL',
+    minimumFractionDigits: 2,
+});
 
-
-const columns = [{
+const getColumns = () => ([{
     header: 'Name',
     accessor: 'name' // String-based value accessors !
 }, {
     header: 'CPF',
-    accessor: 'id',
+    accessor: 'cpf',
     render: props => <span className='number'>{props.value}</span> // Custom cell components!
 }, {
     header: 'Race',
@@ -51,9 +53,10 @@ const columns = [{
     accessor: 'company'
 }, {
     header: "Salary", // Custom header components!
-    accessor: 'salary'
+    accessor: 'salary',
+    render: props => <span >{formatter.format(props.value)}</span>
 }
-];
+]);
 
 
 export const List = connect(props => ({

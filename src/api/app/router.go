@@ -11,6 +11,7 @@ import (
 	"github.com/pressly/chi/middleware"
 	"github.com/pressly/chi/render"
 	"gopkg.in/Iwark/spreadsheet.v2"
+	"strings"
 )
 
 type Worker struct {
@@ -245,7 +246,9 @@ func workerFromSheet(spreadsheetID string) (WorkerSheet, error) {
 func row2Worker(row []spreadsheet.Cell) (Worker, error) {
 	CPF := row[0].Value
 	NEWCPF, err := strconv.Atoi(CPF)
+	log.Println("cpf")
 	if err != nil {
+		log.Println("cpf error")
 		log.Println(err.Error())
 		return Worker{}, err
 	}
@@ -253,17 +256,32 @@ func row2Worker(row []spreadsheet.Cell) (Worker, error) {
 	Birthdate := row[3].Value
 	NEWBirthdate, err := time.Parse("2/1/2006", Birthdate)
 
+	log.Println("birth")
 	if err != nil {
+		log.Println("birth error")
 		log.Println(err.Error())
 		return Worker{}, err
 	}
 
 	Salary := row[6].Value
-	NEWSalary, err := strconv.Atoi(Salary)
+
+	withoutCurrencySymbol := strings.Split(Salary, " ")[1]
+	cents := strings.Split(withoutCurrencySymbol, ",")[1]
+	main := strings.Split(withoutCurrencySymbol, ",")[0]
+	ammount := strings.Replace(main, ".", "", -1)
+	log.Printf("ammounnt %v", ammount)
+	log.Printf("main %v", main)
+	log.Printf("cents %v", cents)
+
+	NEWSalaryNEXT, err := strconv.ParseFloat(ammount + "." + cents, 64)
 	if err != nil {
+		log.Println("ParseFloat error")
 		log.Println(err.Error())
+
 		return Worker{}, err
 	}
+
+	log.Println(NEWSalaryNEXT)
 
 	return Worker{
 		Cpf:        NEWCPF,
@@ -272,7 +290,7 @@ func row2Worker(row []spreadsheet.Cell) (Worker, error) {
 		Birthdate: NEWBirthdate,
 		Job:       row[4].Value,
 		Company:   row[5].Value,
-		Salary:    NEWSalary,
+		Salary:    int(NEWSalaryNEXT),
 	}, nil
 
 }
