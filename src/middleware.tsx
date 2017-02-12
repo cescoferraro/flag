@@ -1,4 +1,4 @@
-import {allReducersInitial, allReducers} from "./reducers/index";
+import {FlagDefaultStore, allReducers} from "./reducers/index";
 import *  as injectTapEventPlugin from "react-tap-event-plugin";
 import {createStore} from "redux";
 import * as React from "react";
@@ -37,7 +37,7 @@ export default  () => (request, response) => {
         let App =
             <WithStylesContext onInsertCss={styles => css.push(styles._getCss())}>
                 <MuiThemeProvider muiTheme={getMuiTheme({userAgent: userAgent})}>
-                    <Provider store={createStore(allReducers,allReducersInitial)}>
+                    <Provider store={createStore(allReducers,FlagDefaultStore)}>
                         <StaticRouter location={request.url} context={context}>
                             <FlagApp userAgent={userAgent}/>
                         </StaticRouter>

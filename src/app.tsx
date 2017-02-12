@@ -15,7 +15,6 @@ export default ({userAgent}) => {
             <Switch>
                 <Route exact path="/" component={AsyncLogin(userAgent)} />
                 <Route path="/dashboard" component={AsyncDashboard(userAgent)} />
-
                 <Route component={NoMatch} />
             </Switch>
         </div>)

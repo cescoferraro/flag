@@ -13,3 +13,12 @@ func IsProd() bool {
 	}
 	return false
 }
+
+func contains(s []User, e User) bool {
+	for _, a := range s {
+		if a == e {
+			return true
+		}
+	}
+	return false
+}

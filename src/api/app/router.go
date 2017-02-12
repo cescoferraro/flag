@@ -14,32 +14,28 @@ import (
 )
 
 type Worker struct {
-	Name      string
-	ID        int
-	Race      string
-	Birthdate time.Time
-	Job       string
-	Company   string
-	Salary    int
+	Name      string     `json:"name"`
+	Cpf       int        `json:"cpf"`
+	Race      string     `json:"race"`
+	Birthdate time.Time  `json:"birthdate"`
+	Job       string     `json:"job"`
+	Company   string     `json:"company"`
+	Salary    int        `json:"salary"`
 }
 
 type User struct {
-	Email    string
-	Password string
+	Email    string `json:"email"`
+	Password string `json:"password"`
+}
+
+type WorkerSheet struct {
+	Headers []spreadsheet.Cell `json:"headers"`
+	Data    []Worker `json:"data"`
 }
 
 var AllowedUsers = []User{
 	{Email: "cesco@gmail.com", Password: "cesco12"},
 	{Email: "guest@gmail.com", Password: "guest"},
-}
-
-func contains(s []User, e User) bool {
-	for _, a := range s {
-		if a == e {
-			return true
-		}
-	}
-	return false
 }
 
 func Router(version string) chi.Router {
@@ -67,22 +63,114 @@ func Router(version string) chi.Router {
 			render.JSON(w, r, false)
 		}
 	})
-	r.Get("/sheet", func(w http.ResponseWriter, r *http.Request) {
+
+	r.Post("/add", func(w http.ResponseWriter, r *http.Request) {
+		var newWorker Worker
+		err := json.NewDecoder(r.Body).Decode(&newWorker)
+		if err != nil {
+			log.Println(err.Error())
+			return
+		}
+		log.Println(newWorker)
+
+		spreadsheetID := "1qqIcuAco_VzgvwOOehq7P6my2ppZbyWUFW2Z8GQJ6MQ"
+
 		service, err := spreadsheet.NewService()
 		if err != nil {
+			log.Println(err.Error())
 			w.WriteHeader(http.StatusInternalServerError)
 			render.JSON(w, r, err.Error())
 			return
 		}
-		spreadsheetID := "1qqIcuAco_VzgvwOOehq7P6my2ppZbyWUFW2Z8GQJ6MQ"
 		actualSpreadsheet, err := service.FetchSpreadsheet(spreadsheetID)
 		if err != nil {
+			log.Println(err.Error())
 			w.WriteHeader(http.StatusInternalServerError)
 			render.JSON(w, r, err.Error())
 			return
 		}
 		sheet, err := actualSpreadsheet.SheetByIndex(0)
 		if err != nil {
+			log.Println(err.Error())
+			w.WriteHeader(http.StatusInternalServerError)
+			render.JSON(w, r, err.Error())
+			return
+		}
+		next := len(sheet.Rows)
+		var newNext int
+		for i, row := range sheet.Rows {
+			//skip headers
+			if i != 0 {
+				log.Println("========")
+				log.Println(i + 1)
+				control := true
+				for _, cell := range row {
+					if cell.Value != "" {
+						log.Println(cell.Value)
+						control = false
+						break
+					}
+				}
+				if control {
+
+					newNext = i
+					break
+				}
+
+			}
+		}
+		log.Println(newNext)
+
+		sheet.Update(next, 0, strconv.Itoa(newWorker.Cpf))
+		sheet.Update(next, 1, newWorker.Name)
+		sheet.Update(next, 2, newWorker.Race)
+		sheet.Update(next, 3, newWorker.Birthdate.Format("2/01/2006"))
+		sheet.Update(next, 4, newWorker.Job)
+		sheet.Update(next, 5, newWorker.Company)
+		sheet.Update(next, 6, strconv.Itoa(newWorker.Salary))
+
+		err = sheet.Synchronize()
+		if err != nil {
+			log.Println(err.Error())
+			w.WriteHeader(http.StatusInternalServerError)
+			render.JSON(w, r, err.Error())
+			return
+		}
+		render.JSON(w, r, newWorker)
+	})
+
+	r.Get("/sheets", func(w http.ResponseWriter, r *http.Request) {
+		spreadsheetID := "1qqIcuAco_VzgvwOOehq7P6my2ppZbyWUFW2Z8GQJ6MQ"
+		sheet, err := workerFromSheet(spreadsheetID)
+		if err != nil {
+			log.Println(err.Error())
+			w.WriteHeader(http.StatusInternalServerError)
+			render.JSON(w, r, err.Error())
+			return
+		}
+		render.JSON(w, r, sheet)
+	})
+
+	r.Get("/sheet", func(w http.ResponseWriter, r *http.Request) {
+		spreadsheetID := "1qqIcuAco_VzgvwOOehq7P6my2ppZbyWUFW2Z8GQJ6MQ"
+
+		service, err := spreadsheet.NewService()
+		if err != nil {
+			log.Println(err.Error())
+			w.WriteHeader(http.StatusInternalServerError)
+			render.JSON(w, r, err.Error())
+			return
+		}
+		actualSpreadsheet, err := service.FetchSpreadsheet(spreadsheetID)
+		if err != nil {
+			log.Println(err.Error())
+			w.WriteHeader(http.StatusInternalServerError)
+			render.JSON(w, r, err.Error())
+			return
+		}
+		sheet, err := actualSpreadsheet.SheetByIndex(0)
+		if err != nil {
+			log.Println(err.Error())
 			w.WriteHeader(http.StatusInternalServerError)
 			render.JSON(w, r, err.Error())
 			return
@@ -117,6 +205,43 @@ func Router(version string) chi.Router {
 	return r
 }
 
+func workerFromSheet(spreadsheetID string) (WorkerSheet, error) {
+	var ResultSheet WorkerSheet
+
+	service, err := spreadsheet.NewService()
+	if err != nil {
+		return ResultSheet, err
+	}
+	actualSpreadsheet, err := service.FetchSpreadsheet(spreadsheetID)
+	if err != nil {
+		return ResultSheet, err
+	}
+	sheet, err := actualSpreadsheet.SheetByIndex(0)
+	if err != nil {
+		return ResultSheet, err
+	}
+
+	HEADERS := sheet.Rows[0]
+
+	// holds all workers
+	var workForce []Worker
+	for i, row := range sheet.Rows {
+		//skip headers
+		if i != 0 {
+			// If row is not empy
+			if len(row) != 0 {
+				worker, err := row2Worker(row)
+				if err != nil {
+					log.Println("HEL")
+					log.Println(err.Error())
+				}
+				workForce = append(workForce, worker)
+			}
+		}
+	}
+	return WorkerSheet{Data:workForce, Headers:HEADERS}, nil
+}
+
 func row2Worker(row []spreadsheet.Cell) (Worker, error) {
 	CPF := row[0].Value
 	NEWCPF, err := strconv.Atoi(CPF)
@@ -141,7 +266,7 @@ func row2Worker(row []spreadsheet.Cell) (Worker, error) {
 	}
 
 	return Worker{
-		ID:        NEWCPF,
+		Cpf:        NEWCPF,
 		Name:      row[1].Value,
 		Race:      row[2].Value,
 		Birthdate: NEWBirthdate,

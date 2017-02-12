@@ -1,27 +1,18 @@
 import * as React from "react";
 import AppBar from "material-ui/AppBar";
-import {APP_OBJECT} from "../../reducers/app";
 import {connect} from "react-redux";
 import withStyles from "isomorphic-style-loader/lib/withStyles";
-declare let NODE_ENV: any;
-declare let require: any;
-
-interface StateProps {
-    app: APP_OBJECT
-}
-
-const mapStateToProps = (state) => ({
-    app: state.app
-});
 let css = require("./shell.pcss");
 
-@connect<StateProps,any,any>(mapStateToProps, null)
-class Bar extends React.Component<any, any> {
+
+@connect((state) => ({app: state.app}), null)
+class Shell extends React.Component<any, any> {
     constructor(props) {
         super(props);
     }
 
     render() {
+        console.log(this.props.app);
         return <AppBar
             style={{position:"fixed",top:'0px', width:'100vw'}}
             title={"Flag HR"}
@@ -33,4 +24,4 @@ class Bar extends React.Component<any, any> {
 }
 
 
-export default withStyles(css)(Bar)
+export default withStyles(css)(Shell)
