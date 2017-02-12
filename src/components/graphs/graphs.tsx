@@ -27,7 +27,7 @@ let GraphComponent = ({size, sheet}) => {
                 <RacePieChart width={width} sheet={sheet}/>
 
             </div>
-            {/*<JobPieChart width={width} sheet={sheet}/>*/}connect,
+            {/*<JobPieChart width={width} sheet={sheet}/>*/}
 
             {/*<JobCountTreemapChart width={width} sheet={sheet}/>*/}
             {/*<WorkerCountTreemapChart width={width} sheet={sheet}/>*/}
