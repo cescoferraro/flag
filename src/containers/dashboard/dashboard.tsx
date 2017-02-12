@@ -47,10 +47,9 @@ class DashboardComponent extends React.Component<any, any> {
 
     render() {
         const {height} = this.props.size;
-        console.log(height);
-        console.log(this.props.size)
         return <div>
-            <Route component={DashboardTAB}/>
+            <Route
+                component={DashboardTAB}/>
 
             <Route path="/dashboard/graphs"
                    size={this.props.size}

@@ -1,3 +1,4 @@
+import {connect} from "react-redux";
 import * as React from "react";
 import * as Rx from "rx-lite-dom";
 import {Observable} from "rx-lite-dom";
@@ -9,16 +10,30 @@ import MenuItem from "material-ui/MenuItem";
 import {createAsyncComponent} from "react-async-component";
 import Utils from "../../shared/utils";
 import {Serialize} from "../../shared/serializer";
+import {bindActionCreators} from "redux";
+import {SET_ACTIVE_TAB} from "../../actions/app";
 declare let require, window: any;
 let css = require('./insert.pcss');
 
 const Infinite = require('react-infinite');
 
+export const mapDispatchToPmapStaterops = (dispatch) => {
+    return bindActionCreators({SET_ACTIVE_TAB: SET_ACTIVE_TAB}, dispatch);
+};
+
+//
+// let GraphComponent = ({size, sheet, app, SET_ACTIVE_TAB}) => {
+@connect((state) => ({app: state.app}), mapDispatchToPmapStaterops)
 export class InsertComponent extends React.Component<any,any> {
     state = {race: 1, company: 1};
     refs: {
         race: any;
     };
+
+
+    componentDidMount() {
+        this.props.SET_ACTIVE_TAB(3);
+    }
 
     raceChange(event, index, value) {
 
@@ -74,7 +89,7 @@ export class InsertComponent extends React.Component<any,any> {
     }
 
     render() {
-        
+
         const {height, width} = this.props.size;
         const scroll = height - 48;
         return <Infinite containerHeight={scroll}

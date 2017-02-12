@@ -10,8 +10,8 @@ export class JobPieChart extends React.Component<any, any> {
     chartOptions = {
         segmentShowStroke: true,
         animateRotate: true,
-        animateScale: true,
         responsive: true,
+        height: 260,
     };
 
     componentDidMount() {
@@ -35,14 +35,16 @@ export class JobPieChart extends React.Component<any, any> {
         });
 
         let legend = this.state && this.state.legend || '';
-        return <div style={{display:"flex"}}>
-            <DoughnutChart
-                ref="chart" data={pieData}
-                options={this.chartOptions}
-                width={this.props.width/2*2/3}
-                height={300}
-                className="cv-chart"/>
-            <div dangerouslySetInnerHTML={{ __html: legend }}/>
+        return <div>
+            <h2>Job Distribution</h2>
+
+            <div style={{ maxHeight:"400px",
+                width:this.props.width,display:"flex"}}>
+                <DoughnutChart
+                    ref="chart" data={pieData}
+                    options={this.chartOptions}
+                />
+            </div>
         </div>;
     }
 }

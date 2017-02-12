@@ -1,9 +1,9 @@
 import {combineReducers} from "redux";
-import app, {APP_DEFAULT_VALUES} from "./app";
+import {AppActions, APP_DEFAULT_VALUES} from "./app";
 
 
 export const allReducers = combineReducers({
-    app: app
+    app: AppActions
 });
 
 export const FlagDefaultStore: AppReducers = {

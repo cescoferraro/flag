@@ -1,6 +1,6 @@
 import {UniqueN} from "../../shared/unique";
+import {Doughnut as DoughnutChart} from "react-chartjs";
 import * as React from "react";
-const DoughnutChart = require("react-chartjs").Doughnut;
 
 
 export class RacePieChart extends React.Component<any, any> {
@@ -29,22 +29,17 @@ export class RacePieChart extends React.Component<any, any> {
                 label: result[0][index]
             }
         });
+        return <div>
+            <h2>Race Distribution</h2>
 
-        let legend = this.state && this.state.legend || '';
-        let legendStyle = {
-            display: "flex"
-        };
-        return <div style={{display:"flex"}}>
-            <DoughnutChart
-                ref="chart" data={pieData}
-                options={this.chartOptions}
-                width={this.props.width*2/3}
-                height={this.props.width*2/3}
-                className="cv-chart"/>
-            <div
-                style={legendStyle}
-                dangerouslySetInnerHTML={{ __html: legend }}/>
-        </div>;
+            <div style={{ maxHeight:"400px",
+                width:this.props.width,display:"flex"}}>
+                <DoughnutChart
+                    ref="chart" data={pieData}
+                    options={this.chartOptions}
+                    className="cv-chart"/>
+            </div>
+        </div>
+
     }
 }
-;

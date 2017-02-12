@@ -1,7 +1,7 @@
 FROM golang
 MAINTAINER Francesco Ferraro <francescoaferraro@gmail.com>
 WORKDIR /app
-ADD www/ www
+ADD client_secret.json flag/client_secret.json
 ADD dist/flag flag
 ENV PORT 8080
 EXPOSE 8080

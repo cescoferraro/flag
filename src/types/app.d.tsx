@@ -1,6 +1,7 @@
 type APP_OBJECT = {
     version?: string;
-    component?: JSX.Element
+    component?: JSX.Element;
+    selectedTab?:Number;
 }
 
 interface AppReducers {

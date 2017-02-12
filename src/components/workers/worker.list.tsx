@@ -1,13 +1,31 @@
 import * as React from "react";
 import {connect, PromiseState} from "react-refetch";
 import SizeMe from "react-sizeme";
+import {connect as REDUX} from "react-redux";
 import ReactTable from "react-table";
 import "react-table/react-table.css";
 import {ErrorComponent} from "../error/error";
 import * as moment from "moment";
 import Utils from "../../shared/utils";
+import {bindActionCreators} from "redux";
+import {SET_ACTIVE_TAB} from "../../actions/app";
 const Infinite = require('react-infinite');
+
+
+export const mapDispatchToPmapStaterops = (dispatch) => {
+    return bindActionCreators({SET_ACTIVE_TAB: SET_ACTIVE_TAB}, dispatch);
+};
+
+//
+// let GraphComponent = ({size, sheet, app, SET_ACTIVE_TAB}) => {
+@REDUX((state) => ({app: state.app}), mapDispatchToPmapStaterops)
 class ListComponent extends React.Component<any, any> {
+
+
+    componentDidMount() {
+        this.props.SET_ACTIVE_TAB(1);
+    }
+
     render() {
         const {height, width} = this.props.size;
         const scroll = height - 48;
