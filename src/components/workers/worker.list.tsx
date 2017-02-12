@@ -6,9 +6,11 @@ import "react-table/react-table.css";
 import {ErrorComponent} from "../error/error";
 import * as moment from "moment";
 import Utils from "../../shared/utils";
-
+const Infinite = require('react-infinite');
 class ListComponent extends React.Component<any, any> {
     render() {
+        const {height, width} = this.props.size;
+        const scroll = height - 48;
         const {sheet, sheets} = this.props;
         const columns = getColumns();
         if (sheet.pending) {
@@ -16,11 +18,12 @@ class ListComponent extends React.Component<any, any> {
         } else if (sheet.rejected) {
             return <ErrorComponent/>
         } else if (sheet.fulfilled) {
-            return <div>
+            return <Infinite containerHeight={scroll}
+                             elementHeight={[scroll]}>
                 <ReactTable
                     data={sheet.value}
                     columns={columns}/>
-            </div>
+            </Infinite>
         }
     }
 

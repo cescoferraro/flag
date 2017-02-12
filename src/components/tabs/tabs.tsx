@@ -1,6 +1,8 @@
 import {Tabs, Tab} from "material-ui/Tabs";
 import * as React from "react";
+import withStyles from "isomorphic-style-loader/lib/withStyles";
 
+let css = require("./tabs.pcss");
 
 export class DashboardTAB extends React.Component<any, any> {
 
@@ -13,7 +15,9 @@ export class DashboardTAB extends React.Component<any, any> {
 
     render() {
         return (
-            <Tabs>
+            <Tabs
+                id="TAB"
+                style={{position:"fixed",zIndex:"22",bottom:"0",width:"100vw"}}>
                 <Tab label="Workers"
                      onClick={() => { this.context.router.push("/dashboard/workers") }}
                      data-route="/dashboard/workers">
@@ -28,10 +32,13 @@ export class DashboardTAB extends React.Component<any, any> {
                      data-route="/dashboard/insert">
                 </Tab>
             </Tabs>
+
+
+
         );
     }
 
 }
 
 
-export default DashboardTAB
+export default withStyles(css)(DashboardTAB)
