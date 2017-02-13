@@ -20,6 +20,7 @@
   "homepage": "https://github.com/cescoferraro/flag#readme",
   "dependencies": {
     "chart.js": "^1.1.1",
+    "d3act": "^3.1.0",
     "es6-object-assign": "^1.0.3",
     "es6-promise": "^4.0.5",
     "fixed-data-table": "^0.6.3",
@@ -27,9 +28,11 @@
     "rd3": "^0.7.4",
     "react": "15.4.1",
     "react-chartjs": "^0.8.0",
+    "react-d3-library": "^1.1.7",
     "react-dom": "15.4.1",
     "react-helmet": "^4.0.0",
     "react-infinite": "^0.10.0",
+    "react-progress": "^0.0.12",
     "react-redux": "5.0.2",
     "react-refetch": "^1.0.0",
     "react-router": "4.0.0-alpha.6",
@@ -38,6 +41,8 @@
     "react-table": "^5.0.3",
     "rebass": "^0.3.3",
     "redux": "3.6.0",
+    "redux-form": "^6.5.0",
+    "redux-form-material-ui": "^4.1.2",
     "rx-lite-dom": "7.0.3",
     "serviceworker-webpack-plugin": "^0.1.8"
   },

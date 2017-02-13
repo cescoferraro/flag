@@ -17,7 +17,7 @@ const reduxDevTools = window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVT
 const store = createStore(allReducers, FlagDefaultStore, reduxDevTools);
 const theme = getMuiTheme({}, {userAgent: navigator.userAgent});
 const rootEl = document.getElementById("container");
-
+require('isomorphic-fetch');
 
 injectTapEventPlugin();
 

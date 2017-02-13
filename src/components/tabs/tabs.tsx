@@ -16,25 +16,29 @@ class DashboardTABComponent extends React.Component<any, any> {
     }
 
     render() {
-        console.log(this.props.app.selectedTab);
         return (
             <Tabs
                 value={this.props.app.selectedTab}
                 id="TAB"
-                style={{position:"fixed",zIndex:"22",bottom:"0",width:"100vw"}}>
+                style={{
+                    backgroundColor:"#43A047",
+                position:"fixed",zIndex:"22",bottom:"0",width:"100vw"}}>
                 <Tab label="Workers"
                      value={1}
+                     style={{backgroundColor:"#43A047"}}
                      onClick={() => { this.context.router.push("/dashboard/workers") }}
                      data-route="/dashboard/workers">
                 </Tab>
                 <Tab label="Graphs"
                      value={2}
+                     style={{backgroundColor:"#43A047"}}
                      onClick={() => { this.context.router.push("/dashboard/graphs") }}
                      data-route="/dashboard/graphs">
                 </Tab>
 
                 <Tab label="Insert"
                      value={3}
+                     style={{backgroundColor:"#43A047"}}
                      onClick={() => { this.context.router.push("/dashboard/insert") }}
                      data-route="/dashboard/insert">
                 </Tab>

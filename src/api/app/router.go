@@ -2,7 +2,6 @@ package app
 
 import (
 	"encoding/json"
-	"log"
 	"net/http"
 	"strconv"
 	"time"
@@ -53,7 +52,8 @@ func Router(version string) chi.Router {
 		var newUser User
 		err := json.NewDecoder(r.Body).Decode(&newUser)
 		if err != nil {
-			log.Println(err.Error())
+			w.WriteHeader(http.StatusForbidden)
+			render.JSON(w, r, false)
 			return
 		}
 		if contains(AllowedUsers, newUser) {
@@ -69,59 +69,48 @@ func Router(version string) chi.Router {
 		var newWorker Worker
 		err := json.NewDecoder(r.Body).Decode(&newWorker)
 		if err != nil {
-			log.Println(err.Error())
 			return
 		}
-		log.Println(newWorker)
-
 		spreadsheetID := "1qqIcuAco_VzgvwOOehq7P6my2ppZbyWUFW2Z8GQJ6MQ"
 
 		service, err := spreadsheet.NewService()
 		if err != nil {
-			log.Println(err.Error())
 			w.WriteHeader(http.StatusInternalServerError)
 			render.JSON(w, r, err.Error())
 			return
 		}
 		actualSpreadsheet, err := service.FetchSpreadsheet(spreadsheetID)
 		if err != nil {
-			log.Println(err.Error())
 			w.WriteHeader(http.StatusInternalServerError)
 			render.JSON(w, r, err.Error())
 			return
 		}
 		sheet, err := actualSpreadsheet.SheetByIndex(0)
 		if err != nil {
-			log.Println(err.Error())
 			w.WriteHeader(http.StatusInternalServerError)
 			render.JSON(w, r, err.Error())
 			return
 		}
 		next := len(sheet.Rows)
-		var newNext int
-		for i, row := range sheet.Rows {
-			//skip headers
-			if i != 0 {
-				log.Println("========")
-				log.Println(i + 1)
-				control := true
-				for _, cell := range row {
-					if cell.Value != "" {
-						log.Println(cell.Value)
-						control = false
-						break
-					}
-				}
-				if control {
-
-					newNext = i
-					break
-				}
-
-			}
-		}
-		log.Println(newNext)
-
+		//var newNext int
+		//for i, row := range sheet.Rows {
+		//	//skip headers
+		//	if i != 0 {
+		//		control := true
+		//		for _, cell := range row {
+		//			if cell.Value != "" {
+		//				control = false
+		//				break
+		//			}
+		//		}
+		//		if control {
+		//
+		//			newNext = i
+		//			break
+		//		}
+		//
+		//	}
+		//}
 		sheet.Update(next, 0, strconv.Itoa(newWorker.Cpf))
 		sheet.Update(next, 1, newWorker.Name)
 		sheet.Update(next, 2, newWorker.Race)
@@ -132,7 +121,6 @@ func Router(version string) chi.Router {
 
 		err = sheet.Synchronize()
 		if err != nil {
-			log.Println(err.Error())
 			w.WriteHeader(http.StatusInternalServerError)
 			render.JSON(w, r, err.Error())
 			return
@@ -144,7 +132,6 @@ func Router(version string) chi.Router {
 		spreadsheetID := "1qqIcuAco_VzgvwOOehq7P6my2ppZbyWUFW2Z8GQJ6MQ"
 		sheet, err := workerFromSheet(spreadsheetID)
 		if err != nil {
-			log.Println(err.Error())
 			w.WriteHeader(http.StatusInternalServerError)
 			render.JSON(w, r, err.Error())
 			return
@@ -157,28 +144,24 @@ func Router(version string) chi.Router {
 
 		service, err := spreadsheet.NewService()
 		if err != nil {
-			log.Println(err.Error())
 			w.WriteHeader(http.StatusInternalServerError)
 			render.JSON(w, r, err.Error())
 			return
 		}
 		actualSpreadsheet, err := service.FetchSpreadsheet(spreadsheetID)
 		if err != nil {
-			log.Println(err.Error())
 			w.WriteHeader(http.StatusInternalServerError)
 			render.JSON(w, r, err.Error())
 			return
 		}
 		sheet, err := actualSpreadsheet.SheetByIndex(0)
 		if err != nil {
-			log.Println(err.Error())
 			w.WriteHeader(http.StatusInternalServerError)
 			render.JSON(w, r, err.Error())
 			return
 		}
 
-		HEADERS := sheet.Rows[0]
-		log.Println(HEADERS)
+		//HEADERS := sheet.Rows[0]
 
 		// holds all workers
 		var workForce []Worker
@@ -189,7 +172,6 @@ func Router(version string) chi.Router {
 				if len(row) != 0 {
 					worker, err := row2Worker(row)
 					if err != nil {
-						log.Println(err.Error())
 						return
 					}
 					workForce = append(workForce, worker)
@@ -233,8 +215,7 @@ func workerFromSheet(spreadsheetID string) (WorkerSheet, error) {
 			if len(row) != 0 {
 				worker, err := row2Worker(row)
 				if err != nil {
-					log.Println("HEL")
-					log.Println(err.Error())
+					return ResultSheet, err
 				}
 				workForce = append(workForce, worker)
 			}
@@ -246,20 +227,13 @@ func workerFromSheet(spreadsheetID string) (WorkerSheet, error) {
 func row2Worker(row []spreadsheet.Cell) (Worker, error) {
 	CPF := row[0].Value
 	NEWCPF, err := strconv.Atoi(CPF)
-	log.Println("cpf")
 	if err != nil {
-		log.Println("cpf error")
-		log.Println(err.Error())
 		return Worker{}, err
 	}
 
 	Birthdate := row[3].Value
 	NEWBirthdate, err := time.Parse("2/1/2006", Birthdate)
-
-	log.Println("birth")
 	if err != nil {
-		log.Println("birth error")
-		log.Println(err.Error())
 		return Worker{}, err
 	}
 
@@ -269,19 +243,11 @@ func row2Worker(row []spreadsheet.Cell) (Worker, error) {
 	cents := strings.Split(withoutCurrencySymbol, ",")[1]
 	main := strings.Split(withoutCurrencySymbol, ",")[0]
 	ammount := strings.Replace(main, ".", "", -1)
-	log.Printf("ammounnt %v", ammount)
-	log.Printf("main %v", main)
-	log.Printf("cents %v", cents)
 
 	NEWSalaryNEXT, err := strconv.ParseFloat(ammount + "." + cents, 64)
 	if err != nil {
-		log.Println("ParseFloat error")
-		log.Println(err.Error())
-
 		return Worker{}, err
 	}
-
-	log.Println(NEWSalaryNEXT)
 
 	return Worker{
 		Cpf:        NEWCPF,

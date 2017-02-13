@@ -13,7 +13,7 @@ spec:
         name: flag-frontend-pods
     spec:
       containers:
-        - image: cescoferraro/flag:frontend-0.0.1
+        - image: cescoferraro/flag:frontend-0.0.2
           imagePullPolicy: Always
           name: frontend
           env:

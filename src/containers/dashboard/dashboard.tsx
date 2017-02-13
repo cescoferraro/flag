@@ -33,10 +33,8 @@ class DashboardComponent extends React.Component<any, any> {
     componentDidMount() {
         let menuIcon =
             <IconButton onClick={()=>{
-                this.context.router.go("/");
-                this.context.router.goForward("/");
-                this.context.router.replace("/");
-                console.log("hello")}}>
+                this.props.replace("/");
+                }}>
                 <MoreVertIcon />
             </IconButton>;
         this.props.SET_APP_BAR_MENU(menuIcon);
@@ -44,6 +42,9 @@ class DashboardComponent extends React.Component<any, any> {
 
     }
 
+    componentWillUnmount() {
+        this.props.SET_APP_BAR_MENU(null);
+    }
 
     render() {
         const {height} = this.props.size;

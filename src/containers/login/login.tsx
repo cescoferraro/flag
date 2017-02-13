@@ -1,87 +1,75 @@
-import Utils from "../../shared/utils";
 import * as React from "react";
 import * as Rx from "rx-lite-dom";
 import {Observable} from "rx-lite-dom";
 import withStyles from "isomorphic-style-loader/lib/withStyles";
-import {Card, CardActions, CardHeader, CardMedia, CardTitle, CardText} from "material-ui/Card";
-import {Button} from "rebass";
-import TextField from "material-ui/TextField";
 import {createAsyncComponent} from "react-async-component";
 import {BelowAppBar} from "../../shared/routes";
+import {reduxForm, Field} from "redux-form";
+import {Checkbox, RadioButtonGroup, SelectField, TextField, Toggle} from "redux-form-material-ui";
+import {RadioButton} from "material-ui/RadioButton";
+import Utils from "../../shared/utils";
+import {Serialize} from "../../shared/serializer";
+import IconButton from "material-ui/IconButton";
 declare let require, window: any;
 let css = require('./login.pcss');
-
+let GoogleDrive = require("-!babel-loader!svg-react-loader!../../shared/svg/drive.svg");
 
 class LoginComponent extends React.Component<any, any> {
-    context: any;
-    static contextTypes = {router: React.PropTypes.object};
+    sheetLink: string = "https://docs.google" +
+        ".com/spreadsheets/d/1qqIcuAco_VzgvwOOehq" +
+        "7P6my2ppZbyWUFW2Z8GQJ6MQ/edit?usp=sharing";
 
-    catchErrors(err) {
-        console.error("error: ", err);
-        return Observable.empty();
-    }
-
-    login(event) {
-        console.log(event.target.elements.email.value);
-        event.preventDefault();
-
-        const body = {
-            email: event.target.elements.email.value,
-            password: event.target.elements.password.value
-        };
-        console.log(body);
-        Rx.DOM.post(Utils.API_URL("/login"), require('serialize-javascript')(body))
-            .catch(this.catchErrors)
-            .subscribe(
-                (xhr: XMLHttpRequest) => {
-                    let me: User = JSON.parse(xhr.response);
-                    console.log(me);
-                    console.log(this.context.router);
-                    this.context.router.go("/dashboard/workers");
-                    this.context.router.goForward("/dashboard/workers");
-                    this.context.router.replace("/dashboard/workers");
-                });
-
+    Submit(form) {
+        Rx.DOM.post({
+            url: Utils.API_URL("/login"),
+            body: Serialize({
+                email: form.email,
+                password: form.password
+            })
+        }).subscribe(() => {
+            this.props.replace("/dashboard/workers")
+        });
     }
 
     render() {
+        let large = {
+            width: 120,
+            height: 120,
+            padding: 30,
+        };
+        let largeIcon = {
+            width: 60,
+            height: 60,
+        };
         return (
-            <div className={css.page}>
-                <div className={css.container}>
-                    <form onSubmit={this.login.bind(this)} className={css.form}>
-                        <Card>
-                            <TextField
-                                defaultValue={"cesco@gmail.com"}
-                                type="email"
-                                id="email"
-                                name="email"
-                                floatingLabelText="Email"
-                                fullWidth={true}
-                                hintText="Hint Text"
-                            /><br />
+            <form onSubmit={this.props.handleSubmit(this.Submit.bind(this))}>
+                <Field name="email"
+                       type="email"
+                       floatingLabelText="Email"
+                       required
+                       component={TextField}
+                       fullWidth={true}
+                       floatingLabelFixed={true}
+                       hintText="Email"/>
+                <Field name="password"
+                       type="password"
+                       required
+                       floatingLabelFixed={true}
+                       floatingLabelText="Password"
+                       fullWidth={true}
+                       component={TextField}
+                       hintText="Password"/>
 
-                            <TextField
-                                fullWidth={true}
-                                defaultValue={"cesco12"}
-                                type="password"
-                                floatingLabelText="Password"
-                                id="password"
-                                name="password"
-                                hintText="Hint Text"
-                            />
-                            <br />
-
-
-                        </Card>
-                        <br />
-                        <CardActions>
-                            <Button>LOGIN </Button>
-                        </CardActions>
-                    </form>
-                </div>
-            </div>)
+                <IconButton type="submit"
+                            label="lgdkjfn"
+                            iconStyle={largeIcon} style={large}>
+                    <GoogleDrive style={{height: '20px'}}/>
+                </IconButton>
+            </form>)
     }
 }
 
-
-export default withStyles(css)(BelowAppBar(LoginComponent));
+// Decorate with redux-form
+export default reduxForm({
+    form: 'loginForm'
+})(withStyles(css)(BelowAppBar(LoginComponent)));

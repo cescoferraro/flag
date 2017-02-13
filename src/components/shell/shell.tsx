@@ -4,6 +4,7 @@ import {connect} from "react-redux";
 import withStyles from "isomorphic-style-loader/lib/withStyles";
 let css = require("./shell.pcss");
 
+let GoogleDrive = require("-!babel-loader!svg-react-loader!../../shared/svg/drive.svg");
 
 @connect((state) => ({app: state.app}), null)
 class Shell extends React.Component<any, any> {
@@ -12,11 +13,10 @@ class Shell extends React.Component<any, any> {
     }
 
     render() {
-        console.log(this.props.app);
         return <AppBar
-            style={{position:"fixed",top:'0px', width:'100vw'}}
+            style={{backgroundColor:"#43A047", position:"fixed",top:'0px', width:'100vw'}}
             title={"Flag HR"}
-            iconElementLeft={<div></div>}
+            iconElementLeft={<GoogleDrive style={{height: '48px',width: '48px'}}/>}
             iconElementRight={this.props.app.component}
         />;
     }

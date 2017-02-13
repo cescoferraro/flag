@@ -1,7 +1,8 @@
 type APP_OBJECT = {
     version?: string;
     component?: JSX.Element;
-    selectedTab?:Number;
+    selectedTab?: Number;
+    insertProgress?: Number;
 }
 
 interface AppReducers {

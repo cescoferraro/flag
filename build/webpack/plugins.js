@@ -36,8 +36,20 @@ let server = [
 let client = [
 	...server,
 	new FaviconsWebpackPlugin({
-		logo: './src/shared/icon/icon.png',
-		prefix: 'icons/'
+		logo: './src/shared/icon/sheets.png',
+		prefix: 'icons/',
+		icons: {
+			android: true,
+			appleIcon: true,
+			appleStartup: true,
+			coast: false,
+			favicons: true,
+			firefox: true,
+			opengraph: false,
+			twitter: false,
+			yandex: false,
+			windows: false
+		}
 	}),
 	new StatsWebpackPlugin('stats.json', {
 		chunkModules: true,

@@ -8,6 +8,6 @@ export let BODY = ({content, STATE_IDENTIFIER, state}) => {
     <div id="container" dangerouslySetInnerHTML={ {__html: content} }/>
     <script type={type} dangerouslySetInnerHTML={{__html:async}}/>
     <script src="/vendor.js"/>
-    <script src="/js/app.bundle.js"/>
+    <script async src="/js/app.bundle.js"/>
     </body>
 };

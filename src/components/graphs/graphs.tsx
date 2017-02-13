@@ -16,13 +16,14 @@ import {RacePieChart} from "./race.pie.chart";
 import {SET_ACTIVE_TAB} from "../../actions/app";
 import {bindActionCreators} from "redux";
 import {connect} from "react-redux";
+import {BubbleChart} from "./worker.salary.bubble.chart";
 const Infinite = require('react-infinite');
 const css = require('./graph.pcss');
-
 
 export const mapDispatchToPmapStaterops = (dispatch) => {
     return bindActionCreators({SET_ACTIVE_TAB: SET_ACTIVE_TAB}, dispatch);
 };
+
 
 //
 // let GraphComponent = ({size, sheet, app, SET_ACTIVE_TAB}) => {
@@ -43,17 +44,12 @@ class GraphComponent extends React.Component<any, any> {
         } else if (sheet.rejected) {
             return <ErrorComponent/>
         } else if (sheet.fulfilled) {
-            console.log(this.props.app);
             return (
                 <Infinite containerHeight={scroll}
                           elementHeight={[scroll]}>
                     <div>
-                        <div>
-                            <h2>HERE WE HAVE SOME FUN!</h2>
-
-                        </div>
-
-
+                        <BubbleChart width={width} sheet={sheet}/>
+                        {/*<RD4Chart width={width} sheet={sheet}/>*/}
                         <JobCountTreemapChart width={width} sheet={sheet}/>
                         <h2>PAYROLL BY COMPANY</h2>
                         <SalaryGrossChart width={width} sheet={sheet}/>
