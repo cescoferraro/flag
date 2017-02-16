@@ -32,6 +32,8 @@ export default  () => (request, response) => {
         } else {
             response.status(200);
         }
+
+
         let css = []; // CSS fodashboardr all rendered React components
         let userAgent = request.headers['user-agent'];
         let App =

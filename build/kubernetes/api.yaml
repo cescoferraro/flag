@@ -13,7 +13,7 @@ spec:
         name: flag-api-pods
     spec:
       containers:
-        - image: cescoferraro/flag:api-0.0.2
+        - image: cescoferraro/flag:api-0.0.5
           imagePullPolicy: Always
           name: backend
           env:

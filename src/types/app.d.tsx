@@ -3,6 +3,10 @@ type APP_OBJECT = {
     component?: JSX.Element;
     selectedTab?: Number;
     insertProgress?: Number;
+    loginProgress?: Number;
+    editModal?: boolean;
+    editing?: FlagWorker;
+
 }
 
 interface AppReducers {

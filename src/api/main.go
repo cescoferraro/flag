@@ -13,8 +13,6 @@ var (
 
 func main() {
 	r := app.Router(version)
-
-
 	log.Printf("Starting Flag API Tester version %s ...", version)
 	log.Fatal(http.ListenAndServe(":7070", r))
 

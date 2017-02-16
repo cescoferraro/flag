@@ -51,10 +51,7 @@ let client = [
 			windows: false
 		}
 	}),
-	new StatsWebpackPlugin('stats.json', {
-		chunkModules: true,
-		exclude: [/node_modules/]
-	}),
+
 ];
 
 
@@ -66,6 +63,10 @@ if (process.env.NODE_ENV !== "production") {
 			context: '.',
 			manifest: require('../../www/vendor.json')
 		}));
+	client.push(new StatsWebpackPlugin('stats.json', {
+		chunkModules: true,
+		exclude: [/node_modules/]
+	}));
 
 } else {
 	client.push(new webpack.optimize.CommonsChunkPlugin(

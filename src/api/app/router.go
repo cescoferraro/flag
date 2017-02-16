@@ -11,6 +11,7 @@ import (
 	"github.com/pressly/chi/render"
 	"gopkg.in/Iwark/spreadsheet.v2"
 	"strings"
+	"log"
 )
 
 type Worker struct {
@@ -56,6 +57,8 @@ func Router(version string) chi.Router {
 			render.JSON(w, r, false)
 			return
 		}
+
+		log.Println(newUser)
 		if contains(AllowedUsers, newUser) {
 			w.WriteHeader(200)
 			render.JSON(w, r, true)
@@ -69,6 +72,9 @@ func Router(version string) chi.Router {
 		var newWorker Worker
 		err := json.NewDecoder(r.Body).Decode(&newWorker)
 		if err != nil {
+			log.Println(err.Error())
+			w.WriteHeader(http.StatusInternalServerError)
+			render.JSON(w, r, err.Error())
 			return
 		}
 		spreadsheetID := "1qqIcuAco_VzgvwOOehq7P6my2ppZbyWUFW2Z8GQJ6MQ"
@@ -91,26 +97,9 @@ func Router(version string) chi.Router {
 			render.JSON(w, r, err.Error())
 			return
 		}
+
+		log.Println(newWorker)
 		next := len(sheet.Rows)
-		//var newNext int
-		//for i, row := range sheet.Rows {
-		//	//skip headers
-		//	if i != 0 {
-		//		control := true
-		//		for _, cell := range row {
-		//			if cell.Value != "" {
-		//				control = false
-		//				break
-		//			}
-		//		}
-		//		if control {
-		//
-		//			newNext = i
-		//			break
-		//		}
-		//
-		//	}
-		//}
 		sheet.Update(next, 0, strconv.Itoa(newWorker.Cpf))
 		sheet.Update(next, 1, newWorker.Name)
 		sheet.Update(next, 2, newWorker.Race)
@@ -125,6 +114,77 @@ func Router(version string) chi.Router {
 			render.JSON(w, r, err.Error())
 			return
 		}
+		render.JSON(w, r, newWorker)
+	})
+
+	r.Post("/update", func(w http.ResponseWriter, r *http.Request) {
+		var newWorker Worker
+		err := json.NewDecoder(r.Body).Decode(&newWorker)
+		if err != nil {
+			log.Println(err.Error())
+			w.WriteHeader(http.StatusInternalServerError)
+			render.JSON(w, r, err.Error())
+			return
+		}
+
+		spreadsheetID := "1qqIcuAco_VzgvwOOehq7P6my2ppZbyWUFW2Z8GQJ6MQ"
+
+		service, err := spreadsheet.NewService()
+		if err != nil {
+			w.WriteHeader(http.StatusInternalServerError)
+			render.JSON(w, r, err.Error())
+			return
+		}
+		actualSpreadsheet, err := service.FetchSpreadsheet(spreadsheetID)
+		if err != nil {
+			w.WriteHeader(http.StatusInternalServerError)
+			render.JSON(w, r, err.Error())
+			return
+		}
+		sheet, err := actualSpreadsheet.SheetByIndex(0)
+		if err != nil {
+			w.WriteHeader(http.StatusInternalServerError)
+			render.JSON(w, r, err.Error())
+			return
+		}
+		if err != nil {
+			w.WriteHeader(http.StatusInternalServerError)
+			render.JSON(w, r, err.Error())
+			return
+		}//HEADERS := sheet.Rows[0]
+
+		// holds all workers
+		var roww int
+		for i, row := range sheet.Rows {
+			//skip headers
+			if i != 0 {
+				// If row is not empy
+				if len(row) != 0 {
+					num, _ := strconv.Atoi(row[0].Value)
+					if num == newWorker.Cpf {
+						roww = i
+
+					}
+				}
+			}
+		}
+		log.Println(roww)
+		sheet.Update(roww, 0, strconv.Itoa(newWorker.Cpf))
+		sheet.Update(roww, 1, newWorker.Name)
+		sheet.Update(roww, 2, newWorker.Race)
+		sheet.Update(roww, 3, newWorker.Birthdate.Format("2/01/2006"))
+		sheet.Update(roww, 4, newWorker.Job)
+		sheet.Update(roww, 5, newWorker.Company)
+		sheet.Update(roww, 6, strconv.Itoa(newWorker.Salary))
+
+		// Make sure call Synchronize to reflect the changes.
+		err = sheet.Synchronize()
+		if err != nil {
+			w.WriteHeader(http.StatusInternalServerError)
+			render.JSON(w, r, err.Error())
+			return
+		}
+		log.Println(newWorker)
 		render.JSON(w, r, newWorker)
 	})
 

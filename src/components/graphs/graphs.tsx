@@ -17,6 +17,7 @@ import {SET_ACTIVE_TAB} from "../../actions/app";
 import {bindActionCreators} from "redux";
 import {connect} from "react-redux";
 import {BubbleChart} from "./worker.salary.bubble.chart";
+import SizeMe from "react-sizeme";
 const Infinite = require('react-infinite');
 const css = require('./graph.pcss');
 
@@ -25,10 +26,13 @@ export const mapDispatchToPmapStaterops = (dispatch) => {
 };
 
 
-//
-// let GraphComponent = ({size, sheet, app, SET_ACTIVE_TAB}) => {
 @connect((state) => ({app: state.app}), mapDispatchToPmapStaterops)
-class GraphComponent extends React.Component<any, any> {
+@REFETCH(props => ({
+    sheet: Utils.API_URL("/sheet")
+}))
+@withStyles(css)
+@SizeMe({monitorHeight: true})
+export class Graphs extends React.Component<any, any> {
 
     componentDidMount() {
         this.props.SET_ACTIVE_TAB(2);
@@ -45,43 +49,26 @@ class GraphComponent extends React.Component<any, any> {
             return <ErrorComponent/>
         } else if (sheet.fulfilled) {
             return (
-                <Infinite containerHeight={scroll}
-                          elementHeight={[scroll]}>
-                    <div>
-                        <BubbleChart width={width} sheet={sheet}/>
-                        {/*<RD4Chart width={width} sheet={sheet}/>*/}
-                        <JobCountTreemapChart width={width} sheet={sheet}/>
-                        <h2>PAYROLL BY COMPANY</h2>
-                        <SalaryGrossChart width={width} sheet={sheet}/>
-                        <JobPieChart width={width} sheet={sheet}/>
-                        <WorkerCountTreemapChart width={width} sheet={sheet}/>
-                        <WorkerSalaryTreemapChart width={width} sheet={sheet}/>
-                        <RacePieChart width={width} sheet={sheet}/>
-                        <h2>END</h2>
-                    </div>
-                </Infinite>
+                <div style={{height:"calc( 100vh - 64px)"}}>
+                    <Infinite containerHeight={scroll}
+                              elementHeight={[scroll]}>
+                        <div>
+                            <BubbleChart width={width} sheet={sheet}/>
+                            {/*<RD4Chart width={width} sheet={sheet}/>*/}
+                            <JobCountTreemapChart width={width} sheet={sheet}/>
+                            <h2>PAYROLL BY COMPANY</h2>
+                            <SalaryGrossChart width={width} sheet={sheet}/>
+                            <JobPieChart width={width} sheet={sheet}/>
+                            <WorkerCountTreemapChart width={width} sheet={sheet}/>
+                            <WorkerSalaryTreemapChart width={width} sheet={sheet}/>
+                            <RacePieChart width={width} sheet={sheet}/>
+                            <h2>END</h2>
+                        </div>
+                    </Infinite>
+                </div>
             );
 
         }
 
     }
-}
-
-
-export const Graphs = REFETCH(props => ({
-    sheet: Utils.API_URL("/sheet")
-}))(withStyles(css)(GraphComponent));
-
-
-{/*<div className={css.container}>*/
-}
-{/*<SalaryGrossChart width={width*9/10} sheet={sheet}/>*/
-}
-{/*<JobCountTreemapChart width={width*9/10} sheet={sheet}/>*/
-}
-{/*<WorkerCountTreemapChart width={width*9/10} sheet={sheet}/>*/
-}
-{/*<WorkerSalaryTreemapChart width={width*9/10} sheet={sheet}/>*/
-}
-{/*</div> */
 }

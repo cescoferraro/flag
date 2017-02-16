@@ -6,6 +6,10 @@
   "scripts": {
     "test": "echo 333 && exit 1",
     "production": "NODE_ENV=production  webpack -p --config build/webpack/prod.js",
+    "watch": "NODE_ENV=production  webpack --watch -p --config build/webpack/prod.js",
+    "hot": "node hot.js",
+    "node": "nodemon www/server.bundle.js",
+    "prod": "node www/server.bundle.js",
     "go": "./build/scripts/runGO.sh"
   },
   "repository": {
@@ -32,6 +36,7 @@
     "react-dom": "15.4.1",
     "react-helmet": "^4.0.0",
     "react-infinite": "^0.10.0",
+    "react-modal": "^1.6.5",
     "react-progress": "^0.0.12",
     "react-redux": "5.0.2",
     "react-refetch": "^1.0.0",
@@ -78,7 +83,7 @@
     "isomorphic-style-loader": "1.1.0",
     "lazy-route": "1.0.7",
     "lost": "8.0.0-beta.3",
-    "material-ui": "0.16.5",
+    "material-ui": "0.17.0",
     "moment": "^2.17.1",
     "morgan": "1.7.0",
     "nprogress": "0.2.0",

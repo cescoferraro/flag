@@ -3,6 +3,9 @@ type User = {
     Password: string;
 }
 type FlagWorker = {
-    Email: string;
-    Password: string;
+    name?: string;
+    race?: string;
+    job?: string;
+    salary?: number;
+    birthdate?: string;
 }

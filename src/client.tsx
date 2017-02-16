@@ -14,12 +14,12 @@ import WithStylesContext from "./shared/stylesComponent";
 import {StyleRoot} from "radium";
 import {withAsyncComponents} from "react-async-component";
 const reduxDevTools = window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__();
-const store = createStore(allReducers, FlagDefaultStore, reduxDevTools);
 const theme = getMuiTheme({}, {userAgent: navigator.userAgent});
 const rootEl = document.getElementById("container");
 require('isomorphic-fetch');
 
 injectTapEventPlugin();
+const store = createStore(allReducers, FlagDefaultStore, reduxDevTools);
 
 
 const renderApp = NextApp => {

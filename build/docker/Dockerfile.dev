@@ -15,7 +15,7 @@ RUN apt-get install -y nodejs
 
 # DEV DEPENDENCIES
 RUN go get github.com/cespare/reflex
-RUN npm i -g concurrently
+RUN npm i -g concurrently nodemon
 
 # GOPATH
 WORKDIR /go/src/github.com/cescoferraro/flag
