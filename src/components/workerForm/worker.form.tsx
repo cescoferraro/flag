@@ -81,6 +81,7 @@ export class FORMCESCO extends React.Component<any,any> {
         return (
             <form onSubmit={handleSubmit(this.Submit.bind(this))}>
                 <RaisedButton
+                    secondary={true}
                     fullWidth={true}
                     type="submit">{kind}</RaisedButton>
 
@@ -137,7 +138,6 @@ export class FORMCESCO extends React.Component<any,any> {
                        type="number"
                        floatingLabelText="Salary"
                        required
-                       normalize={toBRL}
                        component={TextField}
                        fullWidth={true}
                        floatingLabelFixed={true}

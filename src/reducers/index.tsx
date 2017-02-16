@@ -14,6 +14,7 @@ export const FlagDefaultStore: AppReducers = {
         selectedTab: 1,
         insertProgress: 0,
         loginProgress: 0,
+        progress: 10,
         editModal: false,
         editing: {
             name: "sfsdfds",

@@ -2,15 +2,19 @@ import * as React from "react";
 import {createAsyncComponent} from "react-async-component";
 import {Route, IndexRoute, Router, Switch, Link} from "react-router-dom";
 import AppShell from "./components/shell/shell";
-import Login from "./containers/login/login";
 import {AsyncDashboard} from "./containers/dashboard/async";
+import {ProgressBar} from "./components/progress/progress";
+import {AsyncLogin} from "./containers/login/async";
+
 
 export default ({userAgent}) => {
     return (
         <div>
             <Route component={AppShell}/>
+            <Route component={ProgressBar}/>
+
             <Switch>
-                <Route exact path="/" component={Login}/>
+                <Route exact path="/" component={AsyncLogin(userAgent)}/>
                 <Route path="/dashboard" component={AsyncDashboard(userAgent)}/>
                 <Route component={NoMatch}/>
             </Switch>

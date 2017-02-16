@@ -3,8 +3,6 @@ import {connect as REFETCH, PromiseState} from "react-refetch";
 import SizeMe from "react-sizeme";
 import {connect as REDUX} from "react-redux";
 import ReactTable from "react-table";
-import "react-table/react-table.css";
-import {ErrorComponent} from "../error/error";
 import Utils from "../../shared/utils";
 import {reduxForm, Field} from "redux-form";
 import {DatePicker, SelectField, TextField} from "redux-form-material-ui";
@@ -37,9 +35,10 @@ export class List extends React.Component<any, any> {
     Edit(state, rowInfo, column, instance) {
         return {
             onClick: e => {
-                this.props.SET_EDITING_USER(rowInfo.row);
+                let worker = JSON.parse(JSON.stringify(rowInfo.row));
+                worker.birthdate = new Date(worker.birthdate);
+                this.props.SET_EDITING_USER(worker);
                 this.props.TOOGLE_EDIT_MODAL();
-                rowInfo.row.birthdate = new Date(rowInfo.row.birthdate);
             }
         }
     }
@@ -58,7 +57,7 @@ export class List extends React.Component<any, any> {
         if (sheet.pending) {
             return <h2>loaidng</h2>
         } else if (sheet.rejected) {
-            return <ErrorComponent/>
+            return <h2>error</h2>
         } else if (sheet.fulfilled) {
             console.log(this.props);
             return (<div style={{height:"calc( 100vh - 64px)"}}>

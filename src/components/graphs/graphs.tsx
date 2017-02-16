@@ -3,7 +3,6 @@ import {Treemap, PieChart} from "rd3";
 import {Button} from "rebass";
 import {PromiseState, connect as REFETCH} from "react-refetch";
 import {Grid, Cell} from "radium-grid";
-import {ErrorComponent} from "../error/error";
 import {Spinner} from "../spinner/index";
 import Utils from "../../shared/utils";
 import withStyles from "isomorphic-style-loader/lib/withStyles";
@@ -46,7 +45,7 @@ export class Graphs extends React.Component<any, any> {
         if (sheet.pending) {
             return <Spinner />
         } else if (sheet.rejected) {
-            return <ErrorComponent/>
+            return <h2>error</h2>
         } else if (sheet.fulfilled) {
             return (
                 <div style={{height:"calc( 100vh - 64px)"}}>

@@ -8,7 +8,7 @@ import {DatePicker, SelectField, TextField} from "redux-form-material-ui";
 import * as Modal from "react-modal";
 import {FORMCESCO} from "./worker.form";
 import {AppActions} from "../../actions/index";
-
+import RaisedButton from "material-ui/RaisedButton";
 export const EditModal =
     REDUX((state) => ({
         app: state.app
@@ -19,9 +19,12 @@ export const EditModal =
                 style={modalstyle}
                 isOpen={app.editModal}
                 contentLabel="Example Modal">
-                <button onClick={TOOGLE_EDIT_MODAL.bind(this)}>
-                    close
-                </button>
+
+                <RaisedButton
+                    fullWidth={true}
+                    primary={true}
+                    onClick={TOOGLE_EDIT_MODAL.bind(this)}
+                >close</RaisedButton>
                 <FORMCESCO refreshSheet={refreshSheet} kind={"update"}/>
             </Modal>
         });

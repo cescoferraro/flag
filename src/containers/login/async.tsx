@@ -5,7 +5,7 @@ import {Spinner} from "../../components/spinner/index";
 export const AsyncLogin = userAgent => createAsyncComponent({
     resolve: () => new Promise(resolve =>
         require.ensure([], (require) => {
-            resolve(require("./login"));
+            resolve(require("./login").LoginComponent);
         })),
     Loading: (prop) => <Spinner userAgent={userAgent}/>
 });

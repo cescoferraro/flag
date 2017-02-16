@@ -20,25 +20,16 @@ export function SET_ACTIVE_TAB(index: Number): Action<APP_OBJECT> {
 }
 
 
-export const SET_INSERT_PROGRESS_ACTION_NAME = "SET_INSERT_PROGRESS";
-export function SET_INSERT_PROGRESS(index: Number): Action<APP_OBJECT> {
+export const SET_PROGRESS_ACTION_NAME = "SET_PROGRESS";
+export function SET_PROGRESS(index: Number): Action<APP_OBJECT> {
     return {
-        type: SET_INSERT_PROGRESS_ACTION_NAME,
+        type: SET_PROGRESS_ACTION_NAME,
         payload: {
-            insertProgress: index
+            progress: index
         }
     }
 }
 
-export const SET_LOGIN_PROGRESS_ACTION_NAME = "SET_LOGIN_PROGRESS";
-export function SET_LOGIN_PROGRESS(index: Number): Action<APP_OBJECT> {
-    return {
-        type: SET_LOGIN_PROGRESS_ACTION_NAME,
-        payload: {
-            loginProgress: index
-        }
-    }
-}
 
 export const TOOGLE_EDIT_MODAL_ACTION_NAME = "TOOGLE_EDIT_MODAL";
 export function TOOGLE_EDIT_MODAL(): Action<APP_OBJECT> {
