@@ -14,6 +14,7 @@ import Utils from "../../shared/utils";
 import {Subscriber} from "rxjs";
 import {BellowAppShell} from "../../shared/bellow.decorator";
 import {push} from "connected-react-router";
+import {Debug} from "../../shared/debug";
 declare let require, window: any;
 let css = require('./login.pcss');
 let GoogleDrive = require("-!babel-loader!svg-react-loader!../../shared/svg/drive.svg");
@@ -22,6 +23,7 @@ let GoogleDrive = require("-!babel-loader!svg-react-loader!../../shared/svg/driv
 @BellowAppShell()
 @reduxForm({form: 'loginForm'})
 @connect((state) => ({app: state.app}), AppActions)
+@Debug()
 export class LoginComponent extends React.Component<any, any> {
     sheetLink: string = "https://docs.google" +
         ".com/spreadsheets/d/1qqIcuAco_VzgvwOOehq" +
@@ -48,21 +50,12 @@ export class LoginComponent extends React.Component<any, any> {
     }
 
     render() {
-        let large = {
-            width: 120,
-            height: 120,
-            padding: 30,
-        };
-        let largeIcon = {
-            width: 60,
-            height: 60,
-        };
+        this.props.console("About to render");
         const {handleSubmit}= this.props;
         return (
             <div>
                 <form onSubmit={handleSubmit(this.Submit.bind(this))}>
                     <h2><a href={this.sheetLink}>Sheet</a></h2>
-                    <h2>Login to the app</h2>
                     <Field name="email"
                            type="email"
                            floatingLabelText="Email"
@@ -84,7 +77,15 @@ export class LoginComponent extends React.Component<any, any> {
 
                     <IconButton type="submit"
                                 label="lgdkjfn"
-                                iconStyle={largeIcon} style={large}>
+                                iconStyle={{ width: 60,
+                                             height: 60,
+                                            }}
+
+                                style={{
+                                                width: 120,
+                                                height: 120,
+                                                padding: 30,
+                                            }}>
                         <GoogleDrive style={{height: '20px'}}/>
                     </IconButton>
                 </form>

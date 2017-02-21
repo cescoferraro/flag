@@ -15,6 +15,12 @@ job=delete:
     mounts: [source]
     command:  rm -rf www/
 
+job=dll:
+    description: "delete www/ folder"
+    use: dev-image
+    mounts: [source]
+    command:  webpack --config build/webpack/vendor.js
+
 
 job=api:
     description: "Builds API Binary"

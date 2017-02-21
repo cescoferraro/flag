@@ -5,11 +5,15 @@ import {routerMiddleware, connectRouter} from "connected-react-router";
 import {createEpicMiddleware} from "redux-observable";
 import {RootEpic} from "./epics";
 declare let window, module: any;
+const createLogger = require(`redux-logger`);
+
 
 let ReplacebleEpicMiddleware = createEpicMiddleware(RootEpic);
 
 const middle = () => {
-    let mid = applyMiddleware(ReplacebleEpicMiddleware);
+    let mid = applyMiddleware(ReplacebleEpicMiddleware, createLogger({
+        collapsed: (getState, action) => true
+    }));
     if (Utils.isServer()) {
         return mid;
     } else {
