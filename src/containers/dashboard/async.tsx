@@ -5,7 +5,7 @@ import {Spinner} from "../../components/spinner/index";
 export const AsyncDashboard = userAgent => createAsyncComponent({
     resolve: () => new Promise(resolve =>
         require.ensure([], (require) => {
-            resolve(require("./dashboard"));
+            resolve(require("./dashboard").Dashboard);
         }, "/dashboard.js")),
     defer: true,
     ssrMode: "defer",

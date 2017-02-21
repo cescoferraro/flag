@@ -4,17 +4,9 @@ import withStyles from "isomorphic-style-loader/lib/withStyles";
 import {connect} from "react-redux";
 let css = require("./tabs.pcss");
 
-
+@withStyles(css)
 @connect((state) => ({app: state.app}), null)
-class DashboardTABComponent extends React.Component<any, any> {
-
-    context: any;
-    static contextTypes = {router: React.PropTypes.object};
-
-    constructor(props) {
-        super(props);
-    }
-
+export class DashboardTAB extends React.Component<any, any> {
     render() {
         return (
             <Tabs
@@ -22,34 +14,32 @@ class DashboardTABComponent extends React.Component<any, any> {
                 id="TAB"
                 style={{
                     backgroundColor:"#43A047",
-                position:"fixed",zIndex:"22",bottom:"0",width:"100vw"}}>
+                    position:"fixed",
+                    zIndex:"22",
+                    bottom:"0",
+                    width:"100vw"}}>
                 <Tab label="Workers"
                      value={1}
                      style={{backgroundColor:"#43A047"}}
-                     onClick={() => { this.context.router.push("/dashboard/workers") }}
+                     onClick={() => { this.props.push("/dashboard/workers") }}
                      data-route="/dashboard/workers">
                 </Tab>
                 <Tab label="Graphs"
                      value={2}
                      style={{backgroundColor:"#43A047"}}
-                     onClick={() => { this.context.router.push("/dashboard/graphs") }}
+                     onClick={() => { this.props.push("/dashboard/graphs") }}
                      data-route="/dashboard/graphs">
                 </Tab>
 
                 <Tab label="Insert"
                      value={3}
                      style={{backgroundColor:"#43A047"}}
-                     onClick={() => { this.context.router.push("/dashboard/insert") }}
+                     onClick={() => { this.props.push("/dashboard/insert") }}
                      data-route="/dashboard/insert">
                 </Tab>
             </Tabs>
-
-
-
         );
     }
 
 }
 
-
-export const DashboardTAB = withStyles(css)(DashboardTABComponent);

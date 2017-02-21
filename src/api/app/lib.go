@@ -10,12 +10,6 @@ import (
 )
 
 func row2Worker(row []spreadsheet.Cell) (Worker, error) {
-	CPF := row[0].Value
-	NEWCPF, err := strconv.Atoi(CPF)
-	if err != nil {
-		return Worker{}, err
-	}
-
 	Birthdate := row[3].Value
 	NEWBirthdate, err := time.Parse("2/1/2006", Birthdate)
 	if err != nil {
@@ -35,7 +29,7 @@ func row2Worker(row []spreadsheet.Cell) (Worker, error) {
 	}
 
 	return Worker{
-		Cpf:        NEWCPF,
+		Cpf:        row[0].Value,
 		Name:      row[1].Value,
 		Race:      row[2].Value,
 		Birthdate: NEWBirthdate,
@@ -65,7 +59,7 @@ func getSheet() (*spreadsheet.Sheet, error) {
 	return GoogleSheet, nil
 }
 
-func findByCPF(cpf int, sheet *spreadsheet.Sheet) (int, error) {
+func findByCPF(cpf string, sheet *spreadsheet.Sheet) (int, error) {
 	// holds all workers
 	var roww int
 	for i, row := range sheet.Rows {
@@ -73,8 +67,7 @@ func findByCPF(cpf int, sheet *spreadsheet.Sheet) (int, error) {
 		if i != 0 {
 			// If row is not empy
 			if len(row) != 0 {
-				num, _ := strconv.Atoi(row[0].Value)
-				if num == cpf {
+				if row[0].Value == cpf {
 					return i, nil
 				}
 			}
@@ -84,7 +77,7 @@ func findByCPF(cpf int, sheet *spreadsheet.Sheet) (int, error) {
 }
 
 func updateRow(rowIndex int, worker Worker, sheet *spreadsheet.Sheet) (error) {
-	sheet.Update(rowIndex, 0, strconv.Itoa(worker.Cpf))
+	sheet.Update(rowIndex, 0, worker.Cpf)
 	sheet.Update(rowIndex, 1, worker.Name)
 	sheet.Update(rowIndex, 2, worker.Race)
 	sheet.Update(rowIndex, 3, worker.Birthdate.Format("2/01/2006"))

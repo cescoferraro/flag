@@ -1,20 +1,21 @@
 import {connect} from "react-redux";
 import * as React from "react";
-import {Observable} from "rx-lite-dom";
 import {Card, CardActions, CardHeader, CardMedia, CardTitle, CardText} from "material-ui/Card";
 import {Button} from "rebass";
 import {DatePicker, SelectField, TextField} from "redux-form-material-ui";
 import {createAsyncComponent} from "react-async-component";
 import {reduxForm, Field} from "redux-form";
 import {FORMCESCO} from "../workerForm/worker.form";
-import {AppActions} from "../../actions/index";
+import {AppActions} from "../../redux/actions";
 import SizeMe from "react-sizeme";
+import withStyles from "isomorphic-style-loader/lib/withStyles";
 declare let require, window: any;
-let css = require('./insert.pcss');
 const Infinite = require('react-infinite');
+
 
 @SizeMe({monitorHeight: true})
 @connect((state) => ({app: state.app}), AppActions)
+@withStyles(require('./insert.pcss'))
 export class InsertComponent extends React.Component<any,any> {
 
 

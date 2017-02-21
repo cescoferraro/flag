@@ -14,6 +14,7 @@ export let HEAD = ({title, css, userAgent}) => {
               href="/icons/favicon.ico"/>
         <Styler rules={css.join('')}/>
         <Styler rules={Tablecss}/>
+        <Styler rules={require("-!raw-loader!ladda/dist/ladda.min.css")}/>
         <Styler rules={ssrBehavior.getStylesheetString(userAgent)}/>
         {/*<script src="http://192.168.1.103:8080/target/target-script-min.js#anonymous"></script>*/}
 

@@ -8,7 +8,7 @@ import (
 
 type Worker struct {
 	Name      string     `json:"name"`
-	Cpf       int        `json:"cpf"`
+	Cpf       string        `json:"cpf"`
 	Race      string     `json:"race"`
 	Birthdate time.Time  `json:"birthdate"`
 	Job       string     `json:"job"`

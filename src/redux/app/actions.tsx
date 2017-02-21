@@ -8,7 +8,6 @@ export function SET_APP_BAR_MENU(component: JSX.Element): Action<APP_OBJECT> {
     }
 }
 
-
 export const SET_ACTIVE_TAB_ACTION_NAME = "SET_ACTIVE_TAB";
 export function SET_ACTIVE_TAB(index: Number): Action<APP_OBJECT> {
     return {
@@ -53,6 +52,14 @@ export const OPEN_EDIT_MODAL_ACTION_NAME = "OPEN_EDIT_MODAL";
 export function OPEN_EDIT_MODAL(): Action<APP_OBJECT> {
     return {
         type: OPEN_EDIT_MODAL_ACTION_NAME,
+        payload: {}
+    }
+}
+
+export const PING_ACTION_NAME = "PING";
+export function PING(): Action<APP_OBJECT> {
+    return {
+        type: PING_ACTION_NAME,
         payload: {}
     }
 }

@@ -1,14 +1,11 @@
 import * as React from "react";
-import {connect, PromiseState} from "react-refetch";
 import {connect as REDUX} from "react-redux";
-import "react-table/react-table.css";
-import {TOOGLE_EDIT_MODAL} from "../../actions/app";
-import {reduxForm, Field} from "redux-form";
-import {DatePicker, SelectField, TextField} from "redux-form-material-ui";
+import {AppActions} from "../../redux/actions";
 import * as Modal from "react-modal";
 import {FORMCESCO} from "./worker.form";
-import {AppActions} from "../../actions/index";
 import RaisedButton from "material-ui/RaisedButton";
+
+
 export const EditModal =
     REDUX((state) => ({
         app: state.app
@@ -20,12 +17,12 @@ export const EditModal =
                 isOpen={app.editModal}
                 contentLabel="Example Modal">
 
+                <FORMCESCO refreshSheet={refreshSheet} kind={"update"}/>
                 <RaisedButton
                     fullWidth={true}
                     primary={true}
                     onClick={TOOGLE_EDIT_MODAL.bind(this)}
                 >close</RaisedButton>
-                <FORMCESCO refreshSheet={refreshSheet} kind={"update"}/>
             </Modal>
         });
 

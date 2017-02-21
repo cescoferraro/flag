@@ -1,7 +1,7 @@
 import * as React from "react";
 import {connect as REDUX} from "react-redux";
 import * as Progress from "react-progress";
-import {AppActions} from "../../actions/index";
+import {AppActions} from "../../redux/actions";
 import compose from "recompose/compose";
 
 const enhance = compose(
