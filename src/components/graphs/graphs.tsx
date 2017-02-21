@@ -12,20 +12,15 @@ import {WorkerCountTreemapChart} from "./worker.count.treemap.chart";
 import {WorkerSalaryTreemapChart} from "./worker.salary.treemap.chart";
 import {JobPieChart} from "./job.pie.chart.next";
 import {RacePieChart} from "./race.pie.chart";
-import {SET_ACTIVE_TAB} from "../../actions/app";
-import {bindActionCreators} from "redux";
 import {connect} from "react-redux";
 import {BubbleChart} from "./worker.salary.bubble.chart";
 import SizeMe from "react-sizeme";
+import {AppActions} from "../../redux/actions";
 const Infinite = require('react-infinite');
 const css = require('./graph.pcss');
 
-export const mapDispatchToPmapStaterops = (dispatch) => {
-    return bindActionCreators({SET_ACTIVE_TAB: SET_ACTIVE_TAB}, dispatch);
-};
 
-
-@connect((state) => ({app: state.app}), mapDispatchToPmapStaterops)
+@connect((state) => ({app: state.app}), AppActions)
 @REFETCH(props => ({
     sheet: Utils.API_URL("/sheet")
 }))

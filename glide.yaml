@@ -6,3 +6,5 @@ import:
   - middleware
 - package: github.com/ahmetalpbalkan/go-linq
   version: v3.0.0
+- package: github.com/pkg/errors
+  version: v0.8.0

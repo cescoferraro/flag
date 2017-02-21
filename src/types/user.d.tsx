@@ -6,6 +6,8 @@ type FlagWorker = {
     name?: string;
     race?: string;
     job?: string;
+    company?: string;
     salary?: number;
-    birthdate?: string;
+    cpf?: string;
+    birthdate?: Date;
 }

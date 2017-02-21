@@ -1,8 +1,8 @@
-hash: bb8a22ab446ce80d27f8c8ac3cb22211e284fdf7a3f00946efce2721ac599074
-updated: 2017-02-08T00:25:23.896072056-02:00
+hash: d3b38a7c4b5136334957cdb1390967c84726e2ac43a03be1f2b78e3000847690
+updated: 2017-02-19T10:59:06.521211802-03:00
 imports:
 - name: cloud.google.com/go
-  version: ce650573d812270c64426f3df9fd220324d24b2f
+  version: 65216237311a9cfc641e2ec8188df94c0e05ddf4
   subpackages:
   - compute/metadata
   - internal
@@ -14,13 +14,15 @@ imports:
   - proto
 - name: github.com/googleapis/gax-go
   version: da06d194a00e19ce00d9011a13931c3f6f6887c7
+- name: github.com/pkg/errors
+  version: 645ef00459ed84a119197bfb8d8205042c6df63d
 - name: github.com/pressly/chi
   version: 54f435d539226571eab1987ed862b1c0fdfdc892
   subpackages:
   - middleware
   - render
 - name: golang.org/x/net
-  version: 41bba8d80bbfab43231ffdf4c210037baae5f6a3
+  version: 60c41d1de8da134c05b7b40154a9a82bf5b7edb9
   subpackages:
   - context
   - context/ctxhttp
@@ -37,6 +39,13 @@ imports:
   - internal
   - jws
   - jwt
+- name: golang.org/x/text
+  version: 85c29909967d7f171f821e7a42e7b7af76fb9598
+  subpackages:
+  - secure/bidirule
+  - transform
+  - unicode/bidi
+  - unicode/norm
 - name: google.golang.org/appengine
   version: 8758a385849434ba5eac8aeedcf5192c5a0f5f10
   subpackages:
@@ -50,7 +59,7 @@ imports:
   - internal/urlfetch
   - urlfetch
 - name: google.golang.org/grpc
-  version: 2a6bf6142e96942e4fb9c0dfb157ee5d3cecafaa
+  version: d0c32ee6a441117d49856d6120ca9552af413ee0
   subpackages:
   - codes
   - credentials
@@ -63,5 +72,5 @@ imports:
   - tap
   - transport
 - name: gopkg.in/Iwark/spreadsheet.v2
-  version: 1cda5e4ed647f93ea4ce4e9053bf6c3b1c1bd7dd
+  version: 9ef7fd972a7d3122d6b43ac54b1ac4a8cfa53033
 testImports: []

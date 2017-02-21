@@ -8,10 +8,9 @@ import {reduxForm, Field} from "redux-form";
 import {DatePicker, SelectField, TextField} from "redux-form-material-ui";
 import {EditModal} from "../workerForm/worker.modal";
 import {getColumns} from "./worker.table.config";
-import {AppActions} from "../../actions/index";
+import {AppActions} from "../../redux/actions";
 const Infinite = require('react-infinite');
 
-@REDUX(state => ({app: state.app}), AppActions)
 @REFETCH(props => {
     const url = Utils.API_URL("/sheet");
     return {
@@ -26,6 +25,7 @@ const Infinite = require('react-infinite');
     }
 })
 @SizeMe({monitorHeight: true})
+@REDUX(state => ({app: state.app}), AppActions)
 export class List extends React.Component<any, any> {
 
     componentDidMount() {
@@ -44,8 +44,13 @@ export class List extends React.Component<any, any> {
     }
 
     componentWillUnmount() {
-        console.log("componentWillUnmount");
         this.props.CLOSE_EDIT_MODAL();
+    }
+
+    hey() {
+        console.log("hello");
+        console.log(this.props);
+        this.props.PING();
     }
 
     render() {
@@ -53,15 +58,16 @@ export class List extends React.Component<any, any> {
         const scroll = height - 48;
         const {sheet} = this.props;
         const columns = getColumns();
-        console.info("height is ", height);
         if (sheet.pending) {
             return <h2>loaidng</h2>
         } else if (sheet.rejected) {
             return <h2>error</h2>
         } else if (sheet.fulfilled) {
-            console.log(this.props);
             return (<div style={{height:"calc( 100vh - 64px)"}}>
                 <EditModal refreshSheet={this.props.refreshSheet}/>
+
+                <button onClick={this.hey.bind(this)}>HELLO
+                </button>
                 <Infinite containerHeight={scroll}
                           elementHeight={[scroll]}>
                     <ReactTable
