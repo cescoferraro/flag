@@ -21,7 +21,6 @@ export const AppReducer = handleActions({
     ["PONG"]: (state, action: Action<APP_OBJECT>) => {
         return {...state};
     },
-
     [SET_PROGRESS_ACTION_NAME]: (state, action: Action<APP_OBJECT>) => {
         return {...state, progress: action.payload.progress};
     },

@@ -7,6 +7,9 @@ const pingEpic = action$ =>
             return action.type === 'PING'
         })
         .map(value => {
+            console.log(value);
+            console.log(value);
+            console.log(value);
             return value
         })
         .mapTo({type: 'PONG'});

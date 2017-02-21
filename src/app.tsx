@@ -15,6 +15,8 @@ export default ({userAgent}) => {
             <Route component={AppShell}/>
             <Route component={ProgressBar}/>
 
+
+
             <Route exact path="/" component={AsyncLogin(userAgent)}/>
             <Switch>
                 <Route path="/dashboard" component={AsyncDashboard(userAgent)}/>

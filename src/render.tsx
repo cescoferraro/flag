@@ -18,14 +18,6 @@ const theme = getMuiTheme({}, {userAgent: navigator.userAgent});
 export const renderApp = (NextApp) => {
     let AppStore = store();
 
-    if (module.hot) {
-        module.hot.accept("./redux/store.tsx", () => {
-            const newStore = require("./redux/store.tsx").store;
-            AppStore = newStore();
-        });
-    }
-
-
     let app = <AppContainer>
         <WithStylesContext onInsertCss={styles => styles._insertCss()}>
             <MuiThemeProvider muiTheme={theme}>
