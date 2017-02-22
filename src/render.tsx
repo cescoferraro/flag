@@ -10,21 +10,22 @@ import {render} from "react-dom";
 import MuiThemeProvider from "material-ui/styles/MuiThemeProvider";
 import WithStylesContext from "./shared/stylesComponent";
 import {store} from "./redux/store";
+import {createBrowserHistory} from "history";
 declare const NODE_ENV, module, require, window: any;
 
 
 const theme = getMuiTheme({}, {userAgent: navigator.userAgent});
 
 export const renderApp = (NextApp) => {
-    let AppStore = store();
-
+    const history = createBrowserHistory();
+    let AppStore = store(history);
     let app = <AppContainer>
         <WithStylesContext onInsertCss={styles => styles._insertCss()}>
             <MuiThemeProvider muiTheme={theme}>
                 <Provider store={AppStore}>
-                    <BrowserRouter >
+                    <ConnectedRouter history={history}>
                         {NextApp}
-                    </BrowserRouter>
+                    </ConnectedRouter>
                 </Provider>
             </MuiThemeProvider>
         </WithStylesContext>

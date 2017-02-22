@@ -10,9 +10,12 @@ const createLogger = require(`redux-logger`);
 
 let ReplacebleEpicMiddleware = createEpicMiddleware(RootEpic);
 
-const middle = () => {
+const middle = (history = {}) => {
     if (Utils.isServer()) {
-        return applyMiddleware(ReplacebleEpicMiddleware);
+        return applyMiddleware(
+            routerMiddleware(history),
+            ReplacebleEpicMiddleware
+        );
     } else {
         let DEV_TOOL = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__;
         let composeEnhancers = DEV_TOOL || compose;
@@ -20,25 +23,31 @@ const middle = () => {
             applyMiddleware(
                 ReplacebleEpicMiddleware,
                 createLogger({
-
                     predicate: (getState, action) => !action.type.startsWith("@@redux-form"),
                     collapsed: (getState, action) => true
-                })
+                }),
+                routerMiddleware(history),
             )
         );
     }
 };
 
 
-export const store = () => {
-    let store = createStore(allReducers, FlagDefaultStore, middle());
+export const store = (history = {}) => {
+    let store = createStore(
+        connectRouter(history)(allReducers),
+        FlagDefaultStore,
+        middle(history)
+    );
+
+
     if (module.hot) {
 
         // Enable Webpack hot module replacement !== AUTH_REMOVE_TOKEN for reducers
         module.hot.accept(['./reducers.tsx', "./epics.tsx"], () => {
             const nextRootEpic = require('./epics.tsx').RootEpic;
             const nextRootReducer = require('./reducers.tsx').allReducers;
-            store.replaceReducer(nextRootReducer);
+            store.replaceReducer(connectRouter(history)(nextRootReducer));
             ReplacebleEpicMiddleware.replaceEpic(nextRootEpic);
         });
     }

@@ -99,6 +99,10 @@ export class LoginComponent extends React.Component<any, any> {
                     })
                 }}>HELLO
                 </button>
+                <button onClick={()=>{
+                    this.props.dispatch(push("/dashboard/workers"))
+                }}>HELLO
+                </button>
             </div>)
     }
 }
