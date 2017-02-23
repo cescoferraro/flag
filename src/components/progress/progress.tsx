@@ -10,10 +10,14 @@ const enhance = compose(
 
 export const ProgressBar = enhance(({app}) => {
     return <Progress id="progress"
-                     speed={0.2}
-                     style={{marginTop:"64px",zIndex:"29999"}}
+                     hideDelay={0.6 }
+                     speed={0.01}
+                     style={{
+                         marginTop:"64px",
+                     display:app.progressBar.loading?"block":"none",
+                     zIndex:"29999"}}
                      color="red"
-                     height={4} percent={app.progress}/>
+                     height={4} percent={app.progressBar.progress}/>
 });
 
 

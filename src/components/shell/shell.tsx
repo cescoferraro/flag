@@ -14,7 +14,7 @@ class Shell extends React.Component<any, any> {
 
     render() {
         return <AppBar
-            style={{backgroundColor:"#43A047", position:"fixed",top:'0px', width:'100vw'}}
+            style={{ position:"fixed",top:'0px', width:'100vw'}}
             title={"Flag HR"}
             iconElementLeft={<GoogleDrive style={{height: '48px',width: '48px'}}/>}
             iconElementRight={this.props.app.component}

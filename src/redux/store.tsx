@@ -13,20 +13,20 @@ let ReplacebleEpicMiddleware = createEpicMiddleware(RootEpic);
 const middle = (history = {}) => {
     if (Utils.isServer()) {
         return applyMiddleware(
-            routerMiddleware(history),
-            ReplacebleEpicMiddleware
+            // routerMiddleware(history),
+            // ReplacebleEpicMiddleware
         );
     } else {
         let DEV_TOOL = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__;
         let composeEnhancers = DEV_TOOL || compose;
         return composeEnhancers(
             applyMiddleware(
-                ReplacebleEpicMiddleware,
+                routerMiddleware(history),
                 createLogger({
                     predicate: (getState, action) => !action.type.startsWith("@@redux-form"),
                     collapsed: (getState, action) => true
                 }),
-                routerMiddleware(history),
+                ReplacebleEpicMiddleware,
             )
         );
     }

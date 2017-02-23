@@ -13,11 +13,11 @@ declare const NODE_ENV, module, require, window: any;
 require('isomorphic-fetch');
 injectTapEventPlugin();
 
-
+console.log("Booting up Client Side")
 
 
 renderApp(FlagApp({userAgent: navigator.userAgent}));
-
+console.log("Finished rendering app");
 
 if (module.hot) {
     module.hot.accept(["./app.tsx","./redux/store.tsx","./render.tsx"], () => {

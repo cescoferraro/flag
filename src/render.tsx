@@ -1,6 +1,5 @@
 import * as React from "react";
 import {Provider} from "react-redux";
-import getMuiTheme from "material-ui/styles/getMuiTheme";
 import {BrowserRouter} from "react-router-dom";
 import {StyleRoot} from "radium";
 import {withAsyncComponents} from "react-async-component";
@@ -11,18 +10,16 @@ import MuiThemeProvider from "material-ui/styles/MuiThemeProvider";
 import WithStylesContext from "./shared/stylesComponent";
 import {store} from "./redux/store";
 import {createBrowserHistory} from "history";
+import {MyTheme} from "./shared/material.theme";
 declare const NODE_ENV, module, require, window: any;
 
 
-const theme = getMuiTheme({}, {userAgent: navigator.userAgent});
-
 export const renderApp = (NextApp) => {
     const history = createBrowserHistory();
-    let AppStore = store(history);
     let app = <AppContainer>
         <WithStylesContext onInsertCss={styles => styles._insertCss()}>
-            <MuiThemeProvider muiTheme={theme}>
-                <Provider store={AppStore}>
+            <MuiThemeProvider muiTheme={MyTheme(navigator.userAgent)}>
+                <Provider store={store(history)}>
                     <ConnectedRouter history={history}>
                         {NextApp}
                     </ConnectedRouter>
@@ -30,8 +27,7 @@ export const renderApp = (NextApp) => {
             </MuiThemeProvider>
         </WithStylesContext>
     </AppContainer>;
-    withAsyncComponents(app).then(({appWithAsyncComponents}) =>
-        render(appWithAsyncComponents, document.getElementById("container")),
-    );
+    render(app, document.getElementById("container"))
+
 };
 

@@ -19,48 +19,43 @@ export function SET_ACTIVE_TAB(index: Number): Action<APP_OBJECT> {
 }
 
 
-export const SET_PROGRESS_ACTION_NAME = "SET_PROGRESS";
-export function SET_PROGRESS(index: Number): Action<APP_OBJECT> {
+export const SET_PROGRESS_BAR_ACTION_NAME = "SET_PROGRESS_BAR";
+export function SET_PROGRESS_BAR({progress, loading = true}:
+    {progress: number, loading?: boolean}): Action<APP_OBJECT> {
     return {
-        type: SET_PROGRESS_ACTION_NAME,
+        type: SET_PROGRESS_BAR_ACTION_NAME,
         payload: {
-            progress: index
+            progressBar: {
+                progress: progress,
+                loading: loading
+            }
         }
     }
 }
 
 
-export const TOOGLE_EDIT_MODAL_ACTION_NAME = "TOOGLE_EDIT_MODAL";
-export function TOOGLE_EDIT_MODAL(): Action<APP_OBJECT> {
+export const EDIT_MODAL_STATE_ACTION_NAME = "EDIT_MODAL_STATE";
+export function EDIT_MODAL_STATE(state: boolean): Action<APP_OBJECT> {
     return {
-        type: TOOGLE_EDIT_MODAL_ACTION_NAME,
-        payload: {}
+        type: EDIT_MODAL_STATE_ACTION_NAME,
+        payload: {editModal: state}
     }
 }
 
 
-export const CLOSE_EDIT_MODAL_ACTION_NAME = "CLOSE_EDIT_MODAL";
-export function CLOSE_EDIT_MODAL(): Action<APP_OBJECT> {
+export const LOGIN_ACTION_NAME = "LOGIN";
+export function LOGIN(form): Action<APP_OBJECT> {
     return {
-        type: CLOSE_EDIT_MODAL_ACTION_NAME,
-        payload: {}
+        type: LOGIN_ACTION_NAME,
+        payload: form
     }
 }
 
-
-export const OPEN_EDIT_MODAL_ACTION_NAME = "OPEN_EDIT_MODAL";
-export function OPEN_EDIT_MODAL(): Action<APP_OBJECT> {
+export const SET_WORKER_ACTION_NAME = "SET_WORKER";
+export function SET_WORKER(form): Action<APP_OBJECT> {
     return {
-        type: OPEN_EDIT_MODAL_ACTION_NAME,
-        payload: {}
-    }
-}
-
-export const PING_ACTION_NAME = "PING";
-export function PING(): Action<APP_OBJECT> {
-    return {
-        type: PING_ACTION_NAME,
-        payload: {}
+        type: SET_WORKER_ACTION_NAME,
+        payload: form
     }
 }
 

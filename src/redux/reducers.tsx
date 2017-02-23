@@ -2,6 +2,7 @@ import {combineReducers} from "redux";
 import {AppReducer} from "./app/reducers";
 import {reducer as formReducer} from "redux-form";
 import * as moment from "moment";
+import {RANDOM_USER} from "../shared/random.user";
 declare let window: any;
 
 export const allReducers = combineReducers({
@@ -9,23 +10,17 @@ export const allReducers = combineReducers({
     form: formReducer
 });
 
+
 export const FlagDefaultStore: AppReducers = {
     app: {
         component: null,
         version: "0.0.0",
         selectedTab: 1,
-        insertProgress: 0,
-        loginProgress: 0,
-        progress: 10,
         editModal: false,
-        editing: {
-            name: "Novo Funcionário",
-            race: "black",
-            cpf: "01925411028",
-            company: "google.com",
-            birthdate: randomDate(),
-            job: "Senior Helper",
-            salary: 5345,
+        editing: RANDOM_USER(),
+        progressBar: {
+            loading: false,
+            progress: 0
         }
     }
 };

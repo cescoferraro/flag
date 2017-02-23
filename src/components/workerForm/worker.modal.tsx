@@ -10,7 +10,7 @@ export const EditModal =
     REDUX((state) => ({
         app: state.app
     }), AppActions)(
-        ({app, TOOGLE_EDIT_MODAL, refreshSheet}) => {
+        ({app, EDIT_MODAL_STATE, refreshSheet}) => {
 
             return <Modal
                 style={modalstyle}
@@ -21,7 +21,7 @@ export const EditModal =
                 <RaisedButton
                     fullWidth={true}
                     primary={true}
-                    onClick={TOOGLE_EDIT_MODAL.bind(this)}
+                    onClick={EDIT_MODAL_STATE.bind(this,false)}
                 >close</RaisedButton>
             </Modal>
         });
