@@ -2,7 +2,6 @@ import * as React from "react";
 import FlagApp from "./app";
 import * as injectTapEventPlugin from "react-tap-event-plugin";
 import {Provider} from "react-redux";
-import getMuiTheme from "material-ui/styles/getMuiTheme";
 import {BrowserRouter, Route, Link} from "react-router-dom";
 import {StyleRoot} from "radium";
 import {withAsyncComponents} from "react-async-component";

@@ -53,8 +53,8 @@ export class LoginComponent extends React.Component<any, any> {
                            hintText="Password"/>
                     <IconButton type="submit"
                                 label="lgdkjfn"
-                                className={css.button}
-                    >
+                                iconClassName={css.icon}
+                                className={css.button}>
                         <GoogleDrive />
                     </IconButton>
                 </form>

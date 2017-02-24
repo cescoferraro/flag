@@ -12,6 +12,7 @@ func Router(version string) chi.Router {
 	r.Post("/version", Version(version))
 	r.Post("/login", Login)
 	r.Post("/add", Add)
+	r.Post("/delete", Delete)
 	r.Post("/update", Update)
 	r.Get("/sheet", Sheet)
 	return r

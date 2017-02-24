@@ -40,7 +40,6 @@ const SerializeWorker = (form) => {
 const setWorker = action$ =>
     action$.ofType(SET_WORKER_ACTION_NAME)
         .mergeMap(action => {
-
                 let sub: Subscriber<any> = Subscriber.create(
                     (x: any) => {
                         action.payload.dispatch(SET_PROGRESS_BAR({progress: (x.loaded / x.total) * 100}))
@@ -64,18 +63,23 @@ const setWorker = action$ =>
                         }
                     ))
                     .flatMap(value => {
+                        console.log("here====")
                         if (action.payload.kind === "add") {
                             return Observable.concat(
                                 Observable.of(push("/dashboard/workers"))
                             )
                         }
-                        if (action.payload.kind === "update") {
+                        if (action.payload.kind === "update" ||
+                            action.payload.kind === "delete"
+                        ) {
                             action.payload.refresh();
                             return Observable.concat(
                                 Observable.of(EDIT_MODAL_STATE(false))
                             )
 
                         }
+
+                        return
                     }).catch(error => Observable.of({
                         type: "PONG",
                         payload: error.xhr.response,

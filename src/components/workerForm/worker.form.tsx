@@ -9,8 +9,10 @@ import {AppActions} from "../../redux/actions";
 import "rxjs/add/observable/dom/ajax";
 import LaddaButton, {XL, EXPAND_RIGHT} from "react-ladda";
 import {RANDOM_USER} from "../../shared/random.user";
+import withStyles from "isomorphic-style-loader/lib/withStyles";
 const faker = require('faker/locale/pt_BR');
 const required = value => value === "" ? 'Required' : null;
+const css = require("./form.pcss");
 
 
 @REDUX((state) => ({
@@ -19,6 +21,7 @@ const required = value => value === "" ? 'Required' : null;
     initialValues: state.app.editing
 }), AppActions)
 @reduxForm({form: 'editForm'})
+@withStyles(css)
 export class FORMCESCO extends React.Component<any,any> {
     refs: any;
     state = {
@@ -42,6 +45,16 @@ export class FORMCESCO extends React.Component<any,any> {
         this.props.SET_WORKER({
             form: form,
             kind: this.props.kind,
+            refresh: this.props.refreshSheet,
+            dispatch: this.props.dispatch,
+        })
+    }
+
+    Delete(form) {
+        console.log("dispatching set_worker delte actions");
+        this.props.SET_WORKER({
+            form: form,
+            kind: "delete",
             refresh: this.props.refreshSheet,
             dispatch: this.props.dispatch,
         })
@@ -122,16 +135,40 @@ export class FORMCESCO extends React.Component<any,any> {
                     loading={this.props.app.progressBar.loading}
                     progress={this.props.app.progressBar.progress/100}
                     style={{width:"100%"}}
-                    data-color="#eee"
+                    data-color="green"
                     data-size={XL}
+                    className={css.ladda}
                     disabled={submitting|| invalid}
                     data-style={EXPAND_RIGHT}
                     data-spinner-size={30}
                     data-spinner-color="#ddd"
                     data-spinner-lines={12}
                 >
-                    {kind}
+                    {kind.toUpperCase()}
                 </LaddaButton>
+                <br/>
+                <br/>
+
+                {
+                    kind === "update" ?
+                        <LaddaButton
+                            onClick={handleSubmit(this.Delete.bind(this))}
+                            loading={this.props.app.progressBar.loading}
+                            progress={this.props.app.progressBar.progress/100}
+                            style={{width:"100%"}}
+                            data-color="green"
+                            data-size={XL}
+                            className={css.ladda}
+                            disabled={submitting|| invalid}
+                            data-style={EXPAND_RIGHT}
+                            data-spinner-size={30}
+                            data-spinner-color="#ddd"
+                            data-spinner-lines={12}
+                        >
+                            {"DELETE"}
+                        </LaddaButton>
+                        : null
+                }
 
             </div>)
     }

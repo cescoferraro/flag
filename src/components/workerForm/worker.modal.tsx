@@ -3,8 +3,7 @@ import {connect as REDUX} from "react-redux";
 import {AppActions} from "../../redux/actions";
 import * as Modal from "react-modal";
 import {FORMCESCO} from "./worker.form";
-import RaisedButton from "material-ui/RaisedButton";
-
+import LaddaButton, {XL, EXPAND_RIGHT} from "react-ladda";
 
 export const EditModal =
     REDUX((state) => ({
@@ -18,11 +17,21 @@ export const EditModal =
                 contentLabel="Example Modal">
 
                 <FORMCESCO refreshSheet={refreshSheet} kind={"update"}/>
-                <RaisedButton
-                    fullWidth={true}
-                    primary={true}
+                <br/>
+                <LaddaButton
                     onClick={EDIT_MODAL_STATE.bind(this,false)}
-                >close</RaisedButton>
+                    loading={false}
+                    progress={0}
+                    style={{width:"100%"}}
+                    data-color="green"
+                    data-size={XL}
+                    data-style={EXPAND_RIGHT}
+                    data-spinner-size={30}
+                    data-spinner-color="#ddd"
+                    data-spinner-lines={12}
+                >
+                    CLOSE
+                </LaddaButton>
             </Modal>
         });
 
