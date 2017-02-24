@@ -12,6 +12,7 @@ import {StyleRoot} from "radium";
 import {withAsyncComponents} from "react-async-component";
 import createServerRenderContext from "react-router/createServerRenderContext";
 import {store} from "./redux/store";
+import {MyTheme} from "./shared/material.theme";
 declare let require: any;
 injectTapEventPlugin();
 
@@ -37,7 +38,7 @@ export default  () => (request, response) => {
         let userAgent = request.headers['user-agent'];
         let App =
             <WithStylesContext onInsertCss={styles => css.push(styles._getCss())}>
-                <MuiThemeProvider muiTheme={getMuiTheme({userAgent: userAgent})}>
+                <MuiThemeProvider muiTheme={MyTheme(userAgent)}>
                     <Provider store={store()}>
                         <StaticRouter location={request.url} context={context}>
                             <FlagApp userAgent={userAgent}/>

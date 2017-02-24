@@ -38,19 +38,13 @@ export class List extends React.Component<any, any> {
                 let worker = JSON.parse(JSON.stringify(rowInfo.row));
                 worker.birthdate = new Date(worker.birthdate);
                 this.props.SET_EDITING_USER(worker);
-                this.props.TOOGLE_EDIT_MODAL();
+                this.props.EDIT_MODAL_STATE(true);
             }
         }
     }
 
     componentWillUnmount() {
-        this.props.CLOSE_EDIT_MODAL();
-    }
-
-    hey() {
-        console.log("hello");
-        console.log(this.props);
-        this.props.PING();
+        this.props.EDIT_MODAL_STATE(false);
     }
 
     render() {
@@ -65,9 +59,6 @@ export class List extends React.Component<any, any> {
         } else if (sheet.fulfilled) {
             return (<div style={{height:"calc( 100vh - 64px)"}}>
                 <EditModal refreshSheet={this.props.refreshSheet}/>
-
-                <button onClick={this.hey.bind(this)}>HELLO
-                </button>
                 <Infinite containerHeight={scroll}
                           elementHeight={[scroll]}>
                     <ReactTable

@@ -7,8 +7,6 @@ module.exports = [
 	'lodash',
 	'rx',
 	'css-keyframer',
-	'rx-lite',
-	'rx-lite-dom',
 	'redux',
 	'react-redux',
 	'react-router',

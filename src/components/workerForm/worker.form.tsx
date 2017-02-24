@@ -6,13 +6,13 @@ import {reduxForm, Field} from "redux-form";
 import {DatePicker, SelectField, TextField} from "redux-form-material-ui";
 import MenuItem from "material-ui/MenuItem";
 import {AppActions} from "../../redux/actions";
-import {Subscriber, Observable} from "rxjs";
-import Utils from "../../shared/utils";
-import {Serialize} from "../../shared/serializer";
 import "rxjs/add/observable/dom/ajax";
 import LaddaButton, {XL, EXPAND_RIGHT} from "react-ladda";
-
+import {RANDOM_USER} from "../../shared/random.user";
+import withStyles from "isomorphic-style-loader/lib/withStyles";
+const faker = require('faker/locale/pt_BR');
 const required = value => value === "" ? 'Required' : null;
+const css = require("./form.pcss");
 
 
 @REDUX((state) => ({
@@ -21,6 +21,7 @@ const required = value => value === "" ? 'Required' : null;
     initialValues: state.app.editing
 }), AppActions)
 @reduxForm({form: 'editForm'})
+@withStyles(css)
 export class FORMCESCO extends React.Component<any,any> {
     refs: any;
     state = {
@@ -30,15 +31,7 @@ export class FORMCESCO extends React.Component<any,any> {
 
 
     componentWillUnmount() {
-        this.props.SET_EDITING_USER({
-            name: "junior",
-            company: "apple.com",
-            cpf: "01925411028",
-            race: "black",
-            job: "Click Here!",
-            salary: 0,
-            birthdate: new Date()
-        });
+        this.props.SET_EDITING_USER(RANDOM_USER());
     }
 
     SerializeWorker(form) {
@@ -49,47 +42,26 @@ export class FORMCESCO extends React.Component<any,any> {
     }
 
     Submit(form) {
-        this.setState({...this.state, progress: 0.05, loading: true});
-        Observable.ajax({
-            method: "post",
-            url: Utils.API_URL("/" + this.props.kind),
-            progressSubscriber: Subscriber.create(
-                (x: any) => {
-                    this.setState({
-                        ...this.state,
-                        progress: x.loaded / x.total
-                    });
-                },
-                null,
-                () => {
-                    this.setState({
-                        loading: false,
-                        progress: 0
-                    });
-
-                }),
-            body: Serialize(this.SerializeWorker(form))
-        }).subscribe(() => {
-            setTimeout(() => {
-                if (this.props.kind === "add") {
-                    this.props.replace("/dashboard/workers");
-                }
-                if (this.props.kind === "update") {
-                    this.props.refreshSheet();
-                    this.props.CLOSE_EDIT_MODAL();
-                }
-            }, 300)
+        this.props.SET_WORKER({
+            form: form,
+            kind: this.props.kind,
+            refresh: this.props.refreshSheet,
+            dispatch: this.props.dispatch,
         })
     }
 
-    componentWillMount() {
-
+    Delete(form) {
+        console.log("dispatching set_worker delte actions");
+        this.props.SET_WORKER({
+            form: form,
+            kind: "delete",
+            refresh: this.props.refreshSheet,
+            dispatch: this.props.dispatch,
+        })
     }
 
     render() {
         const {handleSubmit, invalid, submitting, kind}= this.props;
-        let name, job;
-        console.log(this.props);
         return (
             <div>
                 <form ref="hello">
@@ -160,84 +132,54 @@ export class FORMCESCO extends React.Component<any,any> {
                 </form>
                 <LaddaButton
                     onClick={handleSubmit(this.Submit.bind(this))}
-                    loading={this.state.loading}
-                    progress={this.state.progress}
+                    loading={this.props.app.progressBar.loading}
+                    progress={this.props.app.progressBar.progress/100}
                     style={{width:"100%"}}
-                    data-color="#eee"
+                    data-color="green"
                     data-size={XL}
+                    className={css.ladda}
                     disabled={submitting|| invalid}
                     data-style={EXPAND_RIGHT}
                     data-spinner-size={30}
                     data-spinner-color="#ddd"
                     data-spinner-lines={12}
                 >
-                    {kind}
+                    {kind.toUpperCase()}
                 </LaddaButton>
+                <br/>
+                <br/>
+
+                {
+                    kind === "update" ?
+                        <LaddaButton
+                            onClick={handleSubmit(this.Delete.bind(this))}
+                            loading={this.props.app.progressBar.loading}
+                            progress={this.props.app.progressBar.progress/100}
+                            style={{width:"100%"}}
+                            data-color="green"
+                            data-size={XL}
+                            className={css.ladda}
+                            disabled={submitting|| invalid}
+                            data-style={EXPAND_RIGHT}
+                            data-spinner-size={30}
+                            data-spinner-color="#ddd"
+                            data-spinner-lines={12}
+                        >
+                            {"DELETE"}
+                        </LaddaButton>
+                        : null
+                }
 
             </div>)
     }
 
 }
 
-const dotI = (val) => {
-    console.log();
-    console.log(val.substr(4, 7));
-    return val.substr(0, 3) + "-" + val.substr(3, 3) + "-" + val.substr(6, 3) + "/" + val.substr(10, 3)
-};
 
 
-const cpfNormalizer = (value) => {
-    let newstring;
-    if (value.length === 11) {
-        return value
-    } else if (value.length < 11) {
-        let zeros = "";
-        for (let i = 1; i <= 11 - value.length; i++) {
-            zeros = "0" + zeros;
-        }
-        newstring = zeros + value;
-    } else if (value.length > 11) {
-        newstring = value.substr(value.length - 11);
-    }
-    return newstring
-};
 
 
-const TestaCPF = (strCPF) => !TestaCPFFunction(strCPF) ? "No valid CPF" : null;
 
-
-const validateBirthdate = (date) => moment(date) > moment(date).subtract(18, 'years') ? "Too young to work" : null;
-
-
-const TestaCPFFunction = (strCPF) => {
-    let Soma;
-    let Resto;
-    Soma = 0;
-
-    if (strCPF == "00000000000") {
-        return false
-    }
-    for (let i = 1; i <= 9; i++) {
-        Soma = Soma + parseInt(strCPF.substring(i - 1, i)) * (11 - i);
-    }
-    Resto = (Soma * 10) % 11;
-
-    if ((Resto == 10) || (Resto == 11)) {
-        Resto = 0
-    }
-    if (Resto != parseInt(strCPF.substring(9, 10))) {
-        return false
-    }
-    Soma = 0;
-    for (let i = 1; i <= 10; i++) {
-        Soma = Soma + parseInt(strCPF.substring(i - 1, i)) * (12 - i);
-    }
-    Resto = (Soma * 10) % 11;
-    if ((Resto == 10) || (Resto == 11)) {
-        Resto = 0
-    }
-    return Resto == parseInt(strCPF.substring(10, 11));
-};
 
 
 
